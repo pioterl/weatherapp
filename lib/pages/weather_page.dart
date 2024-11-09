@@ -12,18 +12,19 @@ class WeatherPage extends StatefulWidget {
 
 class _WeatherPageState extends State<WeatherPage> {
   final WeatherService _weatherService = WeatherService(apiKey: '');
+
   Weather? _weather;
 
   _fetchWeather() async {
-    String city = await _weatherService.getCity();
+    String cityName = await _weatherService.getCurrentCity();
 
     try {
-      final Weather weather = await _weatherService.getWeather(city);
+      final Weather weather = await _weatherService.getWeather(cityName);
       setState(() {
         _weather = weather;
       });
     } catch (e) {
-      print(e);
+      print('Error fetching weather: $e');
     }
   }
 
@@ -41,7 +42,7 @@ class _WeatherPageState extends State<WeatherPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(_weather?.cityName ?? "loading city..."),
-            Text('${_weather?.temperature ?? 0}°C'),
+            Text('${_weather?.temperature.round()}°C'),
           ],
         ),
       ),
