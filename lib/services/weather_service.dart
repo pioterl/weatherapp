@@ -7,23 +7,25 @@ import 'package:http/http.dart' as http;
 import '../model/weather.dart';
 
 class WeatherService {
-  static const BASE_URL = 'http://api.openweathermap.org/data/2.5/weather';
+  static const BASE_URL = 'https://api.pirateweather.net/forecast';
   final String apiKey;
 
   WeatherService({required this.apiKey});
 
-  Future<Weather> getWeather(String city) async {
+  Future<Weather> getWeather(List<String> positions) async {
     final response = await http
-        .get(Uri.parse('$BASE_URL?q=$city&appid=$apiKey&units=metric'));
+        .get(Uri.parse('$BASE_URL/$apiKey/51.759445%2C%2019.457216?units=ca'));
+    // final response = await http.get(Uri.parse(
+    //     '$BASE_URL/$apiKey/${positions[1]},${positions[2]}?units=ca'));
 
     if (response.statusCode == 200) {
-      return Weather.fromJson(jsonDecode(response.body));
+      return Weather.fromJson(jsonDecode(response.body), positions.first);
     } else {
       throw Exception('Failed to load weather');
     }
   }
 
-  Future<String> getCurrentCity() async {
+  Future<List<String>> getCurrentCity() async {
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied ||
         permission == LocationPermission.deniedForever) {
@@ -39,6 +41,10 @@ class WeatherService {
 
     String? city = placemarks[0].locality;
 
-    return city ?? "";
+    return [
+      city ?? "",
+      position.latitude.toString(),
+      position.longitude.toString()
+    ];
   }
 }
