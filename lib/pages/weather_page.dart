@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:weatherapp/model/weather.dart';
 
 import '../services/weather_service.dart';
@@ -15,14 +16,23 @@ class WeatherPage extends StatefulWidget {
 }
 
 class _WeatherPageState extends State<WeatherPage> {
-  final WeatherService _weatherService = WeatherService(apiKey: '');
-
+  late final WeatherService _weatherService;
   Weather? _weather;
 
-  _fetchWeather() async {
-    List<String> positions = await _weatherService.getCurrentCity();
+  @override
+  void initState() {
+    super.initState();
+    final apiKey = dotenv.env['API_KEY'];
+    if (apiKey == null || apiKey.isEmpty) {
+      throw Exception('API_KEY is not set in .env file');
+    }
+    _weatherService = WeatherService(apiKey: apiKey);
+    _fetchWeather();
+  }
 
+  _fetchWeather() async {
     try {
+      List<String> positions = await _weatherService.getCurrentCity();
       final Weather weather = await _weatherService.getWeather(positions);
       setState(() {
         _weather = weather;
@@ -30,12 +40,6 @@ class _WeatherPageState extends State<WeatherPage> {
     } catch (e) {
       print('Error fetching weather: $e');
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchWeather();
   }
 
   @override
