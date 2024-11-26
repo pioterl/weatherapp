@@ -61,66 +61,28 @@ class _BarChart extends StatelessWidget {
     String text;
     switch (value.toInt()) {
       case 0:
-        text = DateTime.fromMillisecondsSinceEpoch(
-                weather!.dailyWeather[0].time * 1000,
-                isUtc: true)
-            .add(Duration(hours: 1))
-            .day
-            .toString();
+        text = getDayNumber(0);
         break;
       case 1:
-        text = DateTime.fromMillisecondsSinceEpoch(
-                weather!.dailyWeather[1].time * 1000,
-                isUtc: true)
-            .add(Duration(hours: 1))
-            .day
-            .toString();
+        text = getDayNumber(1);
         break;
       case 2:
-        text = DateTime.fromMillisecondsSinceEpoch(
-                weather!.dailyWeather[2].time * 1000,
-                isUtc: true)
-            .add(Duration(hours: 1))
-            .day
-            .toString();
+        text = getDayNumber(2);
         break;
       case 3:
-        text = DateTime.fromMillisecondsSinceEpoch(
-                weather!.dailyWeather[3].time * 1000,
-                isUtc: true)
-            .add(Duration(hours: 1))
-            .day
-            .toString();
+        text = getDayNumber(3);
         break;
       case 4:
-        text = DateTime.fromMillisecondsSinceEpoch(
-                weather!.dailyWeather[4].time * 1000,
-                isUtc: true)
-            .add(Duration(hours: 1))
-            .day
-            .toString();
+        text = getDayNumber(4);
         break;
       case 5:
-        text = DateTime.fromMillisecondsSinceEpoch(
-                weather!.dailyWeather[5].time * 1000)
-            .day
-            .toString();
+        text = getDayNumber(5);
         break;
       case 6:
-        text = DateTime.fromMillisecondsSinceEpoch(
-                weather!.dailyWeather[6].time * 1000,
-                isUtc: true)
-            .add(Duration(hours: 1))
-            .day
-            .toString();
+        text = getDayNumber(6);
         break;
       case 7:
-        text = DateTime.fromMillisecondsSinceEpoch(
-                weather!.dailyWeather[7].time * 1000,
-                isUtc: true)
-            .add(Duration(hours: 1))
-            .day
-            .toString();
+        text = getDayNumber(7);
         break;
       default:
         text = '';
@@ -128,9 +90,25 @@ class _BarChart extends StatelessWidget {
     }
     return SideTitleWidget(
       axisSide: meta.axisSide,
-      space: 4,
-      child: Text(text, style: style),
+      space: 4, // Ensure adequate spacing between axis and text
+      child: Column(
+        mainAxisSize:
+            MainAxisSize.min, // Ensure the column does not take extra space
+        children: [
+          Text(text, style: style), // Main text
+          Text("Mon", style: style.copyWith(fontSize: 10)), // Secondary text
+        ],
+      ),
     );
+  }
+
+  String getDayNumber(int i) {
+    return DateTime.fromMillisecondsSinceEpoch(
+            weather!.dailyWeather[i].time * 1000,
+            isUtc: true)
+        .add(Duration(hours: 1))
+        .day
+        .toString();
   }
 
   FlTitlesData get titlesData => FlTitlesData(
@@ -138,7 +116,7 @@ class _BarChart extends StatelessWidget {
         bottomTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
-            reservedSize: 30,
+            reservedSize: 40,
             getTitlesWidget: getTitles,
           ),
         ),
