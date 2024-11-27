@@ -4,6 +4,7 @@ class DailyWeather {
   final int time;
   final double precipIntensity;
   final double windSpeed;
+  final String icon;
 
   DailyWeather({
     required this.temperatureHigh,
@@ -11,6 +12,7 @@ class DailyWeather {
     required this.time,
     required this.precipIntensity,
     required this.windSpeed,
+    required this.icon,
   });
 
   factory DailyWeather.fromJson(Map<String, dynamic> json) {
@@ -20,6 +22,7 @@ class DailyWeather {
       time: json['time'],
       precipIntensity: json['precipProbability'],
       windSpeed: json['windSpeed'],
+      icon: json['icon'],
     );
   }
 }

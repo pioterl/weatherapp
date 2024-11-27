@@ -58,25 +58,12 @@ class _WeatherPageState extends State<WeatherPage> {
                     Text(_weather!.cityName),
                     Text(_weather!.temperature.toStringAsFixed(1)),
                     Text(_weather!.mainCondition),
-                    // Divider(
-                    //   height: 10,
-                    //   thickness: 1,
-                    //   color: Colors.grey,
-                    // ),
-                    // ..._weather!.dailyWeather.map((daily) => Text(
-                    //       daily.temperatureHigh.toStringAsFixed(1),
-                    //     )),
-                    // Divider(
-                    //   height: 10,
-                    //   thickness: 1,
-                    //   color: Colors.grey,
-                    // ),
-                    // ..._weather!.dailyWeather.map((daily) => Text(
-                    //       daily.temperatureLow.toStringAsFixed(1),
-                    //     )),
+                    Text("\n"),
                     BarChartSample3(weather: _weather),
+                    // Text("\n\nWind speed"),
                     Text("\n\n"),
                     LineChartSample5(weather: _weather),
+                    // Text("\n\nProbability of precipitation"),
                     LineChartSample2(weather: _weather),
                   ],
                 ).animate(effects: [FadeEffect()]),
