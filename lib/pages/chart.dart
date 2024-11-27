@@ -20,13 +20,24 @@ class _BarChart extends StatelessWidget {
         gridData: FlGridData(
             show: true, verticalInterval: 0.125, horizontalInterval: 5),
         alignment: BarChartAlignment.spaceAround,
-        maxY: weather?.dailyWeather
-                .map((e) => e.temperatureHigh + 3)
-                .reduce((a, b) => a > b ? a : b) ??
-            0,
-        minY: 0,
+        maxY: getHighest(),
+        minY: getLowest(),
       ),
     );
+  }
+
+  double getHighest() {
+    return weather?.dailyWeather
+            .map((e) => e.temperatureHigh + 3)
+            .reduce((a, b) => a > b ? a : b) ??
+        30;
+  }
+
+  double getLowest() {
+    return weather?.dailyWeather
+            .map((e) => e.temperatureHigh + -3)
+            .reduce((a, b) => a < b ? a : b) ??
+        -10;
   }
 
   BarTouchData get barTouchData => BarTouchData(
@@ -59,7 +70,7 @@ class _BarChart extends StatelessWidget {
       fontSize: 14,
     );
     String dayNum;
-    String dayName = "";
+    String dayName;
     switch (value.toInt()) {
       case 0:
         dayNum = getDayNumber(0);
@@ -95,6 +106,7 @@ class _BarChart extends StatelessWidget {
         break;
       default:
         dayNum = '';
+        dayName = '';
         break;
     }
     return SideTitleWidget(

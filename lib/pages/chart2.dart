@@ -32,57 +32,103 @@ class _LineChartSample5State extends State<LineChartSample5> {
   List<int> showingTooltipOnSpots = [0, 1, 2, 3, 4, 5, 6, 7];
 
   List<FlSpot> get allSpots => [
-        FlSpot(0, widget.weather!.dailyWeather[0].temperatureHigh),
-        FlSpot(1, widget.weather!.dailyWeather[1].temperatureHigh),
-        FlSpot(2, widget.weather!.dailyWeather[2].temperatureHigh),
-        FlSpot(3, widget.weather!.dailyWeather[3].temperatureHigh),
-        FlSpot(4, widget.weather!.dailyWeather[4].temperatureHigh),
-        FlSpot(5, widget.weather!.dailyWeather[5].temperatureHigh),
-        FlSpot(6, widget.weather!.dailyWeather[6].temperatureHigh),
-        FlSpot(7, widget.weather!.dailyWeather[7].temperatureHigh),
+        FlSpot(0, widget.weather!.dailyWeather[0].windSpeed),
+        FlSpot(1, widget.weather!.dailyWeather[1].windSpeed),
+        FlSpot(2, widget.weather!.dailyWeather[2].windSpeed),
+        FlSpot(3, widget.weather!.dailyWeather[3].windSpeed),
+        FlSpot(4, widget.weather!.dailyWeather[4].windSpeed),
+        FlSpot(5, widget.weather!.dailyWeather[5].windSpeed),
+        FlSpot(6, widget.weather!.dailyWeather[6].windSpeed),
+        FlSpot(7, widget.weather!.dailyWeather[7].windSpeed),
       ];
 
   Widget bottomTitleWidgets(double value, TitleMeta meta, double chartWidth) {
     final style = TextStyle(
       fontWeight: FontWeight.bold,
-      color: AppColors.contentColorWhite,
+      color: AppColors.contentColorWhite.withOpacity(0.7),
       fontFamily: 'Digital',
       fontSize: 18 * chartWidth / 500,
     );
-    String text;
+    String dayNum;
+    String dayName;
     switch (value.toInt()) {
       case 0:
-        text = '1';
+        dayNum = getDayNumber(0);
+        dayName = getDayName(0);
         break;
       case 1:
-        text = '4';
+        dayNum = getDayNumber(1);
+        dayName = getDayName(1);
         break;
       case 2:
-        text = '8';
+        dayNum = getDayNumber(2);
+        dayName = getDayName(2);
         break;
       case 3:
-        text = '12';
+        dayNum = getDayNumber(3);
+        dayName = getDayName(3);
         break;
       case 4:
-        text = '16';
+        dayNum = getDayNumber(4);
+        dayName = getDayName(4);
         break;
       case 5:
-        text = '20';
+        dayNum = getDayNumber(5);
+        dayName = getDayName(5);
         break;
       case 6:
-        text = '23';
+        dayNum = getDayNumber(6);
+        dayName = getDayName(6);
         break;
       case 7:
-        text = '24';
+        dayNum = getDayNumber(7);
+        dayName = getDayName(7);
         break;
       default:
-        return Container();
+        dayNum = '';
+        dayName = '';
+        break;
     }
 
     return SideTitleWidget(
       axisSide: meta.axisSide,
-      child: Text(text, style: style),
+      child: Column(
+        mainAxisSize:
+            MainAxisSize.min, // Ensure the column does not take extra space
+        children: [
+          Text(dayNum, style: style), // Main text
+          Text(dayName, style: style.copyWith(fontSize: 10)), // Secondary text
+        ],
+      ),
     );
+  }
+
+  String getDayNumber(int i) {
+    return DateTime.fromMillisecondsSinceEpoch(
+            widget.weather!.dailyWeather[i].time * 1000,
+            isUtc: true)
+        .add(Duration(hours: 1))
+        .day
+        .toString();
+  }
+
+  String getDayName(int i) {
+    int weekday = DateTime.fromMillisecondsSinceEpoch(
+      widget.weather!.dailyWeather[i].time * 1000,
+      isUtc: true,
+    ).add(Duration(hours: 1)).weekday;
+
+    String weekdayName = [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday'
+    ][weekday - 1];
+
+    return weekdayName.substring(0, 3);
   }
 
   @override
@@ -231,7 +277,7 @@ class _LineChartSample5State extends State<LineChartSample5> {
                         constraints.maxWidth,
                       );
                     },
-                    reservedSize: 30,
+                    reservedSize: 40,
                   ),
                 ),
                 rightTitles: const AxisTitles(

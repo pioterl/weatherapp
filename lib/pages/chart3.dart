@@ -25,7 +25,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
     return Stack(
       children: <Widget>[
         AspectRatio(
-          aspectRatio: 1.70,
+          aspectRatio: 1.6,
           child: Padding(
             padding: const EdgeInsets.only(
               right: 30,
@@ -41,59 +41,90 @@ class _LineChartSample2State extends State<LineChartSample2> {
   }
 
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
-    DateTime dateTimeNow = DateTime.now();
-    String now2 = DateFormat('EEEE')
-        .format(dateTimeNow.add(Duration(hours: 24)))
-        .substring(0, 3);
-    String now4 = DateFormat('EEEE')
-        .format(dateTimeNow.add(Duration(hours: 64)))
-        .substring(0, 3);
-    String now6 = DateFormat('EEEE')
-        .format(dateTimeNow.add(Duration(hours: 120)))
-        .substring(0, 3);
-    String now8 = DateFormat('EEEE')
-        .format(dateTimeNow.add(Duration(hours: 168)))
-        .substring(0, 3);
-
     const style = TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 16,
     );
-    Widget text;
+    String dayNum;
+    String dayName;
     switch (value.toInt()) {
       case 0:
-        text = Text('NOW', style: style);
+        dayNum = getDayNumber(0);
+        dayName = getDayName(0);
         break;
       case 1:
-        text = Text(now2, style: style);
+        dayNum = getDayNumber(1);
+        dayName = getDayName(1);
         break;
       case 2:
-        text = Text(now2, style: style);
+        dayNum = getDayNumber(2);
+        dayName = getDayName(2);
         break;
       case 3:
-        text = Text(now2, style: style);
+        dayNum = getDayNumber(3);
+        dayName = getDayName(3);
         break;
       case 4:
-        text = Text(now4, style: style);
+        dayNum = getDayNumber(4);
+        dayName = getDayName(4);
         break;
       case 5:
-        text = Text(now2, style: style);
+        dayNum = getDayNumber(5);
+        dayName = getDayName(5);
         break;
       case 6:
-        text = Text(now6, style: style);
+        dayNum = getDayNumber(6);
+        dayName = getDayName(6);
         break;
       case 7:
-        text = Text(now2, style: style);
+        dayNum = getDayNumber(7);
+        dayName = getDayName(7);
         break;
       default:
-        text = Text('', style: style);
+        dayNum = '';
+        dayName = '';
         break;
     }
 
     return SideTitleWidget(
       axisSide: meta.axisSide,
-      child: text,
+      child: Column(
+        mainAxisSize:
+            MainAxisSize.min, // Ensure the column does not take extra space
+        children: [
+          Text(dayNum, style: style), // Main text
+          Text(dayName, style: style.copyWith(fontSize: 10)), // Secondary text
+        ],
+      ),
     );
+  }
+
+  String getDayNumber(int i) {
+    return DateTime.fromMillisecondsSinceEpoch(
+            widget.weather!.dailyWeather[i].time * 1000,
+            isUtc: true)
+        .add(Duration(hours: 1))
+        .day
+        .toString();
+  }
+
+  String getDayName(int i) {
+    int weekday = DateTime.fromMillisecondsSinceEpoch(
+      widget.weather!.dailyWeather[i].time * 1000,
+      isUtc: true,
+    ).add(Duration(hours: 1)).weekday;
+
+    String weekdayName = [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday'
+    ][weekday - 1];
+
+    return weekdayName.substring(0, 3);
   }
 
   Widget leftTitleWidgets(double value, TitleMeta meta) {
@@ -158,7 +189,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
       gridData: FlGridData(
         show: true,
         drawVerticalLine: true,
-        horizontalInterval: 0.5,
+        horizontalInterval: 0.2,
         verticalInterval: 1,
         getDrawingHorizontalLine: (value) {
           return const FlLine(
@@ -184,7 +215,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
         bottomTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
-            reservedSize: 30,
+            reservedSize: 45,
             interval: 1,
             getTitlesWidget: bottomTitleWidgets,
           ),
@@ -204,7 +235,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
       minX: 0,
       maxX: 7,
       minY: 0,
-      maxY: 1,
+      maxY: 1.3,
       lineBarsData: [
         LineChartBarData(
           spots: [

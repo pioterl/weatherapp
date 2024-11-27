@@ -54,25 +54,26 @@ class _WeatherPageState extends State<WeatherPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Text("\n\n"),
                     Text(_weather!.cityName),
                     Text(_weather!.temperature.toStringAsFixed(1)),
                     Text(_weather!.mainCondition),
-                    Divider(
-                      height: 10,
-                      thickness: 1,
-                      color: Colors.grey,
-                    ),
-                    ..._weather!.dailyWeather.map((daily) => Text(
-                          daily.temperatureHigh.toStringAsFixed(1),
-                        )),
-                    Divider(
-                      height: 10,
-                      thickness: 1,
-                      color: Colors.grey,
-                    ),
-                    ..._weather!.dailyWeather.map((daily) => Text(
-                          daily.temperatureLow.toStringAsFixed(1),
-                        )),
+                    // Divider(
+                    //   height: 10,
+                    //   thickness: 1,
+                    //   color: Colors.grey,
+                    // ),
+                    // ..._weather!.dailyWeather.map((daily) => Text(
+                    //       daily.temperatureHigh.toStringAsFixed(1),
+                    //     )),
+                    // Divider(
+                    //   height: 10,
+                    //   thickness: 1,
+                    //   color: Colors.grey,
+                    // ),
+                    // ..._weather!.dailyWeather.map((daily) => Text(
+                    //       daily.temperatureLow.toStringAsFixed(1),
+                    //     )),
                     BarChartSample3(weather: _weather),
                     Text("\n\n"),
                     LineChartSample5(weather: _weather),
