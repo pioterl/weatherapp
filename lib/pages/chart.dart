@@ -58,48 +58,76 @@ class _BarChart extends StatelessWidget {
       fontWeight: FontWeight.bold,
       fontSize: 14,
     );
-    String text;
+    String dayNum;
+    String dayName = "";
     switch (value.toInt()) {
       case 0:
-        text = getDayNumber(0);
+        dayNum = getDayNumber(0);
+        dayName = getDayName(0);
         break;
       case 1:
-        text = getDayNumber(1);
+        dayNum = getDayNumber(1);
+        dayName = getDayName(1);
         break;
       case 2:
-        text = getDayNumber(2);
+        dayNum = getDayNumber(2);
+        dayName = getDayName(2);
         break;
       case 3:
-        text = getDayNumber(3);
+        dayNum = getDayNumber(3);
+        dayName = getDayName(3);
         break;
       case 4:
-        text = getDayNumber(4);
+        dayNum = getDayNumber(4);
+        dayName = getDayName(4);
         break;
       case 5:
-        text = getDayNumber(5);
+        dayNum = getDayNumber(5);
+        dayName = getDayName(5);
         break;
       case 6:
-        text = getDayNumber(6);
+        dayNum = getDayNumber(6);
+        dayName = getDayName(6);
         break;
       case 7:
-        text = getDayNumber(7);
+        dayNum = getDayNumber(7);
+        dayName = getDayName(7);
         break;
       default:
-        text = '';
+        dayNum = '';
         break;
     }
     return SideTitleWidget(
       axisSide: meta.axisSide,
-      space: 4, // Ensure adequate spacing between axis and text
+      space: 4, // Ensure adequate spacing between axis and dayNum
       child: Column(
         mainAxisSize:
             MainAxisSize.min, // Ensure the column does not take extra space
         children: [
-          Text(text, style: style), // Main text
-          Text("Mon", style: style.copyWith(fontSize: 10)), // Secondary text
+          Text(dayNum, style: style), // Main text
+          Text(dayName, style: style.copyWith(fontSize: 10)), // Secondary text
         ],
       ),
     );
+  }
+
+  String getDayName(int i) {
+    int weekday = DateTime.fromMillisecondsSinceEpoch(
+      weather!.dailyWeather[i].time * 1000,
+      isUtc: true,
+    ).add(Duration(hours: 1)).weekday;
+
+    String weekdayName = [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday'
+    ][weekday - 1];
+
+    return weekdayName.substring(0, 3);
   }
 
   String getDayNumber(int i) {
