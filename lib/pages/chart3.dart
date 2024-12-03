@@ -31,7 +31,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
               right: 30,
               left: 30,
               top: 30,
-              bottom: 12,
+              bottom: 0,
             ),
             child: LineChart(mainData()),
           ),
@@ -160,8 +160,6 @@ class _LineChartSample2State extends State<LineChartSample2> {
   }
 
   LineChartData mainData() {
-    final weather = widget.weather;
-
     List<int> showingTooltipOnSpots = [0, 1, 2, 3, 4, 5, 6, 7];
 
     return LineChartData(
@@ -170,19 +168,19 @@ class _LineChartSample2State extends State<LineChartSample2> {
           LineBarSpot(
             LineChartBarData(
               spots: [
-                FlSpot(0, weather!.dailyWeather[0].temperatureHigh),
-                FlSpot(1, weather!.dailyWeather[1].temperatureHigh),
-                FlSpot(2, weather!.dailyWeather[2].temperatureHigh),
-                FlSpot(3, weather!.dailyWeather[3].temperatureHigh),
-                FlSpot(4, weather!.dailyWeather[4].temperatureHigh),
-                FlSpot(5, weather!.dailyWeather[5].temperatureHigh),
-                FlSpot(6, weather!.dailyWeather[6].temperatureHigh),
-                FlSpot(7, weather!.dailyWeather[7].temperatureHigh),
+                FlSpot(0, widget.weather!.dailyWeather[0].temperatureHigh),
+                FlSpot(1, widget.weather!.dailyWeather[1].temperatureHigh),
+                FlSpot(2, widget.weather!.dailyWeather[2].temperatureHigh),
+                FlSpot(3, widget.weather!.dailyWeather[3].temperatureHigh),
+                FlSpot(4, widget.weather!.dailyWeather[4].temperatureHigh),
+                FlSpot(5, widget.weather!.dailyWeather[5].temperatureHigh),
+                FlSpot(6, widget.weather!.dailyWeather[6].temperatureHigh),
+                FlSpot(7, widget.weather!.dailyWeather[7].temperatureHigh),
               ],
             ),
             0, // Index of the LineChartBarData
-            FlSpot(
-                index.toDouble(), weather!.dailyWeather[index].precipIntensity),
+            FlSpot(index.toDouble(),
+                widget.weather!.dailyWeather[index].precipProbability),
           ),
         ]);
       }).toList(),
@@ -193,14 +191,16 @@ class _LineChartSample2State extends State<LineChartSample2> {
         verticalInterval: 1,
         getDrawingHorizontalLine: (value) {
           return const FlLine(
-            color: AppColors.mainGridLineColor,
-            strokeWidth: 1,
+            color: Colors.blueGrey,
+            strokeWidth: 0.4,
+            dashArray: [8, 4],
           );
         },
         getDrawingVerticalLine: (value) {
           return const FlLine(
-            color: AppColors.mainGridLineColor,
-            strokeWidth: 1,
+            color: Colors.blueGrey,
+            strokeWidth: 0.4,
+            dashArray: [8, 4],
           );
         },
       ),
@@ -239,14 +239,14 @@ class _LineChartSample2State extends State<LineChartSample2> {
       lineBarsData: [
         LineChartBarData(
           spots: [
-            FlSpot(0, weather!.dailyWeather[0].precipIntensity),
-            FlSpot(1, weather!.dailyWeather[1].precipIntensity),
-            FlSpot(2, weather!.dailyWeather[2].precipIntensity),
-            FlSpot(3, weather!.dailyWeather[3].precipIntensity),
-            FlSpot(4, weather!.dailyWeather[4].precipIntensity),
-            FlSpot(5, weather!.dailyWeather[5].precipIntensity),
-            FlSpot(6, weather!.dailyWeather[6].precipIntensity),
-            FlSpot(7, weather!.dailyWeather[7].precipIntensity),
+            FlSpot(0, widget.weather!.dailyWeather[0].precipProbability),
+            FlSpot(1, widget.weather!.dailyWeather[1].precipProbability),
+            FlSpot(2, widget.weather!.dailyWeather[2].precipProbability),
+            FlSpot(3, widget.weather!.dailyWeather[3].precipProbability),
+            FlSpot(4, widget.weather!.dailyWeather[4].precipProbability),
+            FlSpot(5, widget.weather!.dailyWeather[5].precipProbability),
+            FlSpot(6, widget.weather!.dailyWeather[6].precipProbability),
+            FlSpot(7, widget.weather!.dailyWeather[7].precipProbability),
           ],
           isCurved: true,
           gradient: LinearGradient(

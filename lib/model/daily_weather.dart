@@ -2,7 +2,7 @@ class DailyWeather {
   final double temperatureHigh;
   final double temperatureLow;
   final int time;
-  final double precipIntensity;
+  final double precipProbability;
   final double windSpeed;
   final String icon;
 
@@ -10,7 +10,7 @@ class DailyWeather {
     required this.temperatureHigh,
     required this.temperatureLow,
     required this.time,
-    required this.precipIntensity,
+    required this.precipProbability,
     required this.windSpeed,
     required this.icon,
   });
@@ -20,7 +20,7 @@ class DailyWeather {
       temperatureHigh: json['temperatureHigh'].toDouble(),
       temperatureLow: json['temperatureLow'].toDouble(),
       time: json['time'],
-      precipIntensity: json['precipProbability'],
+      precipProbability: json['precipProbability'],
       windSpeed: json['windSpeed'],
       icon: json['icon'],
     );

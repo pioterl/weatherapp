@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:weather_icons/weather_icons.dart';
 
 import '../model/weather.dart';
 import 'app_resources.dart';
@@ -21,23 +22,16 @@ class _BarChart extends StatelessWidget {
             show: true, verticalInterval: 0.125, horizontalInterval: 4),
         alignment: BarChartAlignment.spaceAround,
         maxY: getHighest(),
-        minY: getLowest(),
+        minY: -0.1,
       ),
     );
   }
 
   double getHighest() {
     return weather?.dailyWeather
-            .map((e) => e.temperatureHigh + 3)
+            .map((e) => e.temperatureHigh + 2)
             .reduce((a, b) => a > b ? a : b) ??
         30;
-  }
-
-  double getLowest() {
-    return weather?.dailyWeather
-            .map((e) => e.temperatureHigh + -3)
-            .reduce((a, b) => a < b ? a : b) ??
-        -10;
   }
 
   BarTouchData get barTouchData => BarTouchData(
@@ -120,14 +114,13 @@ class _BarChart extends StatelessWidget {
     }
     return SideTitleWidget(
       axisSide: meta.axisSide,
-      space: 4, // Ensure adequate spacing between axis and dayNum
+      space: 4,
       child: Column(
-        mainAxisSize:
-            MainAxisSize.min, // Ensure the column does not take extra space
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, color: AppColors.contentColorWhite, size: 22),
-          Text(dayNum, style: style), // Main text
-          Text(dayName, style: style.copyWith(fontSize: 10)), // Secondary text
+          BoxedIcon(icon!, size: 22),
+          Text(dayNum, style: style),
+          Text(dayName, style: style.copyWith(fontSize: 10)),
         ],
       ),
     );
@@ -155,27 +148,27 @@ class _BarChart extends StatelessWidget {
   IconData getIcon(int i) {
     switch (weather!.dailyWeather[i].icon) {
       case 'clear-day':
-        return Icons.wb_sunny_outlined;
+        return WeatherIcons.day_sunny;
       case 'clear-night':
-        return Icons.nightlight;
+        return WeatherIcons.night_clear;
       case 'rain':
-        return Icons.water_drop_outlined;
+        return WeatherIcons.rain;
       case 'snow':
-        return Icons.sunny_snowing;
+        return WeatherIcons.snow;
       case 'sleet':
-        return Icons.cloudy_snowing;
+        return WeatherIcons.sleet;
       case 'wind':
-        return Icons.wind_power_outlined;
+        return WeatherIcons.strong_wind;
       case 'fog':
-        return Icons.foggy;
+        return WeatherIcons.fog;
       case 'cloudy':
-        return Icons.cloud_outlined;
+        return WeatherIcons.cloudy;
       case 'partly-cloudy-day':
-        return Icons.cloud_outlined;
+        return WeatherIcons.day_cloudy;
       case 'partly-cloudy-night':
-        return Icons.nights_stay_outlined;
+        return WeatherIcons.night_alt_cloudy;
       default:
-        return Icons.sunny;
+        return WeatherIcons.na;
     }
   }
 
@@ -193,7 +186,7 @@ class _BarChart extends StatelessWidget {
         bottomTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
-            reservedSize: 60,
+            reservedSize: 70,
             getTitlesWidget: getTitles,
           ),
         ),

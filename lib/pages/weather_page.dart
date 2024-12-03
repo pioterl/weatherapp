@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:weather_icons/weather_icons.dart';
 import 'package:weatherapp/model/weather.dart';
 
 import '../services/weather_service.dart';
@@ -54,21 +55,57 @@ class _WeatherPageState extends State<WeatherPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("\n\n"),
-                    Text(_weather!.cityName),
-                    Text(_weather!.temperature.toStringAsFixed(1)),
-                    Text(_weather!.mainCondition),
-                    Text("\n"),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(_weather!.cityName),
+                            Text("${_weather!.temperature.round()}°C"),
+                          ],
+                        ),
+                        Spacer(),
+                        BoxedIcon(getIcon(_weather!.icon), size: 44),
+                      ],
+                    ),
                     BarChartSample3(weather: _weather),
                     // Text("\n\nWind speed"),
+                    LineChartSample2(weather: _weather),
                     Text("\n\n"),
                     LineChartSample5(weather: _weather),
                     // Text("\n\nProbability of precipitation"),
-                    LineChartSample2(weather: _weather),
                   ],
                 ).animate(effects: [FadeEffect()]),
               ),
       ),
     );
+  }
+
+  IconData getIcon(String icon) {
+    switch (icon) {
+      case 'clear-day':
+        return WeatherIcons.day_sunny;
+      case 'clear-night':
+        return WeatherIcons.night_clear;
+      case 'rain':
+        return WeatherIcons.rain;
+      case 'snow':
+        return WeatherIcons.snow;
+      case 'sleet':
+        return WeatherIcons.sleet;
+      case 'wind':
+        return WeatherIcons.strong_wind;
+      case 'fog':
+        return WeatherIcons.fog;
+      case 'cloudy':
+        return WeatherIcons.cloudy;
+      case 'partly-cloudy-day':
+        return WeatherIcons.day_cloudy;
+      case 'partly-cloudy-night':
+        return WeatherIcons.night_alt_cloudy;
+      default:
+        return WeatherIcons.na;
+    }
   }
 }

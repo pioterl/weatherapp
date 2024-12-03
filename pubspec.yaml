@@ -43,6 +43,7 @@ dependencies:
   fl_chart: ^0.69.0
   intl: ^0.18.0
   flutter_dotenv: ^5.2.1
+  weather_icons: ^3.0.0
 
 dev_dependencies:
   flutter_test:
