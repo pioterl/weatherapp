@@ -45,38 +45,53 @@ class _WeatherPageState extends State<WeatherPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: _weather?.temperature == null
-            ? CircularProgressIndicator(
-                color: Colors.grey,
-              ).animate(effects: [FadeEffect()])
-            : SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(_weather!.cityName),
-                            Text("${_weather!.temperature.round()}°C"),
-                          ],
-                        ),
-                        Spacer(),
-                        BoxedIcon(getIcon(_weather!.icon), size: 44),
-                      ],
-                    ),
-                    BarChartSample3(weather: _weather),
-                    // Text("\n\nWind speed"),
-                    LineChartSample2(weather: _weather),
-                    Text("\n\n"),
-                    LineChartSample5(weather: _weather),
-                    // Text("\n\nProbability of precipitation"),
-                  ],
+    return SafeArea(
+      child: Scaffold(
+        body: _weather?.temperature == null
+            ? Center(
+                child: CircularProgressIndicator(
+                  color: Colors.grey,
                 ).animate(effects: [FadeEffect()]),
+              )
+            : RefreshIndicator(
+                onRefresh: () async {
+                  await _fetchWeather();
+                },
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(_weather!.cityName),
+                                Text(
+                                    "${_weather!.temperature.round()}°C, ${_weather!.mainCondition}"),
+                              ],
+                            ),
+                          ),
+                          Spacer(),
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: BoxedIcon(getIcon(_weather!.icon), size: 44),
+                          ),
+                        ],
+                      ),
+                      BarChartSample3(weather: _weather),
+                      // Text("\n\nWind speed"),
+                      LineChartSample2(weather: _weather),
+                      Text("\n\n"),
+                      LineChartSample5(weather: _weather),
+                      // Text("\n\nProbability of precipitation"),
+                    ],
+                  ).animate(effects: [FadeEffect()]),
+                ),
               ),
       ),
     );
