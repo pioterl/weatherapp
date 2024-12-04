@@ -22,7 +22,7 @@ class _BarChart extends StatelessWidget {
             show: true, verticalInterval: 0.125, horizontalInterval: 4),
         alignment: BarChartAlignment.spaceAround,
         maxY: getHighest(),
-        minY: -0.1,
+        minY: getLowest(),
       ),
     );
   }
@@ -32,6 +32,13 @@ class _BarChart extends StatelessWidget {
             .map((e) => e.temperatureHigh + 2)
             .reduce((a, b) => a > b ? a : b) ??
         30;
+  }
+
+  double getLowest() {
+    return weather?.dailyWeather
+            .map((e) => e.temperatureLow)
+            .reduce((a, b) => a < b ? a : b) ??
+        -10;
   }
 
   BarTouchData get barTouchData => BarTouchData(
@@ -311,7 +318,7 @@ class BarChartSample3State extends State<BarChartSample3> {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 1.9,
+      aspectRatio: 1.8,
       child: _BarChart(weather: widget.weather),
     );
   }
