@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:weather_icons/weather_icons.dart';
 import 'package:weatherapp/model/weather.dart';
+import 'package:weatherapp/pages/chart_hourly.dart';
 
 import '../services/weather_service.dart';
 import 'chart.dart';
@@ -84,10 +85,12 @@ class _WeatherPageState extends State<WeatherPage> {
                         ],
                       ),
                       BarChartSample3(weather: _weather),
+                      Text("\n"),
+                      HourlyChart(weather: _weather),
                       // Text("\n\nWind speed"),
-                      LineChartSample2(weather: _weather),
-                      Text("\n\n"),
+                      Text("\n"),
                       LineChartSample5(weather: _weather),
+                      LineChartSample2(weather: _weather),
                       // Text("\n\nProbability of precipitation"),
                     ],
                   ).animate(effects: [FadeEffect()]),
