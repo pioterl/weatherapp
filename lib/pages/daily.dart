@@ -19,7 +19,7 @@ class _BarChart extends StatelessWidget {
         borderData: borderData,
         barGroups: barGroups, // Access weather here
         gridData: FlGridData(
-            show: true, verticalInterval: 0.125, horizontalInterval: 4),
+            show: true, verticalInterval: 0.125, horizontalInterval: 2),
         alignment: BarChartAlignment.spaceAround,
         maxY: getHighest(),
         minY: getLowest(),
@@ -36,7 +36,7 @@ class _BarChart extends StatelessWidget {
 
   double getLowest() {
     return weather?.dailyWeather
-            .map((e) => e.temperatureLow)
+            .map((e) => e.temperatureHigh)
             .reduce((a, b) => a < b ? a : b) ??
         -10;
   }
@@ -305,16 +305,16 @@ class _BarChart extends StatelessWidget {
       ];
 }
 
-class BarChartSample3 extends StatefulWidget {
+class DailyChart extends StatefulWidget {
   final Weather? weather;
 
-  const BarChartSample3({super.key, required this.weather});
+  const DailyChart({super.key, required this.weather});
 
   @override
-  State<StatefulWidget> createState() => BarChartSample3State();
+  State<StatefulWidget> createState() => DailyChartState();
 }
 
-class BarChartSample3State extends State<BarChartSample3> {
+class DailyChartState extends State<DailyChart> {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(

@@ -3,10 +3,11 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:weather_icons/weather_icons.dart';
 import 'package:weatherapp/model/weather.dart';
-import 'package:weatherapp/pages/chart_hourly.dart';
+import 'package:weatherapp/pages/hourly.dart';
 
 import '../services/weather_service.dart';
-import 'chart.dart';
+import 'app_resources.dart';
+import 'daily.dart';
 import 'chart2.dart';
 import 'chart3.dart';
 
@@ -84,14 +85,129 @@ class _WeatherPageState extends State<WeatherPage> {
                           ),
                         ],
                       ),
-                      BarChartSample3(weather: _weather),
-                      Text("\n"),
-                      HourlyChart(weather: _weather),
-                      // Text("\n\nWind speed"),
-                      Text("\n"),
-                      LineChartSample5(weather: _weather),
+                      Align(
+                        alignment: Alignment
+                            .centerLeft, // Align the container to the left
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            left: 20.0,
+                            bottom: 10,
+                          ), // Add 20 pixels of padding from the left
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: AppColors
+                                  .contentColorCyan, // Background color
+                              borderRadius:
+                                  BorderRadius.circular(2.0), // Rounded corners
+                            ),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 8.0,
+                                vertical: 3.0), // Padding inside the container
+                            child: Text(
+                              "DAILY",
+                              style: TextStyle(
+                                color: Colors.black87, // Text color
+                                fontWeight: FontWeight.bold, // Bold text
+                                fontSize: 12.0, // Adjust font size
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      DailyChart(weather: _weather),
+                      Align(
+                        alignment: Alignment
+                            .centerLeft, // Align the container to the left
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            top: 25.0,
+                            left: 20.0,
+                            bottom: 0,
+                          ), // Add 20 pixels of padding from the left
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: AppColors
+                                  .contentColorCyan, // Background color
+                              borderRadius:
+                                  BorderRadius.circular(2.0), // Rounded corners
+                            ),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 8.0,
+                                vertical: 3.0), // Padding inside the container
+                            child: Text(
+                              "CHANCE OF RAIN/SNOW",
+                              style: TextStyle(
+                                color: Colors.black87, // Text color
+                                fontWeight: FontWeight.bold, // Bold text
+                                fontSize: 12.0, // Adjust font size
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                       LineChartSample2(weather: _weather),
-                      // Text("\n\nProbability of precipitation"),
+                      Align(
+                        alignment: Alignment
+                            .centerLeft, // Align the container to the left
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            top: 25.0,
+                            left: 20.0,
+                            bottom: 40,
+                          ), // Add 20 pixels of padding from the left
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: AppColors
+                                  .contentColorCyan, // Background color
+                              borderRadius:
+                                  BorderRadius.circular(2.0), // Rounded corners
+                            ),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 8.0,
+                                vertical: 3.0), // Padding inside the container
+                            child: Text(
+                              "WIND SPEED",
+                              style: TextStyle(
+                                color: Colors.black87, // Text color
+                                fontWeight: FontWeight.bold, // Bold text
+                                fontSize: 12.0, // Adjust font size
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      LineChartSample5(weather: _weather),
+                      Align(
+                        alignment: Alignment
+                            .centerLeft, // Align the container to the left
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            top: 28.0,
+                            left: 20.0,
+                            bottom: 10,
+                          ), // Add 20 pixels of padding from the left
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: AppColors
+                                  .contentColorCyan, // Background color
+                              borderRadius:
+                                  BorderRadius.circular(2.0), // Rounded corners
+                            ),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 8.0,
+                                vertical: 3.0), // Padding inside the container
+                            child: Text(
+                              "HOURLY",
+                              style: TextStyle(
+                                color: Colors.black87, // Text color
+                                fontWeight: FontWeight.bold, // Bold text
+                                fontSize: 12.0, // Adjust font size
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      HourlyChart(weather: _weather),
                     ],
                   ).animate(effects: [FadeEffect()]),
                 ),
