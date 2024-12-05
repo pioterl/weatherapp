@@ -66,7 +66,7 @@ class _BarChart extends StatelessWidget {
 
   Widget getTitles(double value, TitleMeta meta) {
     final style = TextStyle(
-      color: AppColors.contentColorBlue,
+      color: AppColors.contentColorWhite.withOpacity(0.4),
       fontWeight: FontWeight.bold,
       fontSize: 14,
     );

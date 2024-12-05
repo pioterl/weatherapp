@@ -1,20 +1,19 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../model/weather.dart';
 import 'app_resources.dart';
 
-class LineChartSample2 extends StatefulWidget {
+class RainSnow extends StatefulWidget {
   final Weather? weather;
 
-  const LineChartSample2({super.key, required this.weather});
+  const RainSnow({super.key, required this.weather});
 
   @override
-  State<LineChartSample2> createState() => _LineChartSample2State();
+  State<RainSnow> createState() => _RainSnowState();
 }
 
-class _LineChartSample2State extends State<LineChartSample2> {
+class _RainSnowState extends State<RainSnow> {
   List<Color> gradientColors = [
     AppColors.contentColorCyan,
     AppColors.contentColorBlue,
@@ -25,7 +24,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
     return Stack(
       children: <Widget>[
         AspectRatio(
-          aspectRatio: 1.6,
+          aspectRatio: 1.7,
           child: Padding(
             padding: const EdgeInsets.only(
               right: 30,
@@ -41,7 +40,8 @@ class _LineChartSample2State extends State<LineChartSample2> {
   }
 
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
-    const style = TextStyle(
+    TextStyle style = TextStyle(
+      color: AppColors.contentColorWhite.withOpacity(0.4),
       fontWeight: FontWeight.bold,
       fontSize: 14,
     );

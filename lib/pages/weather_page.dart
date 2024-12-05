@@ -8,8 +8,8 @@ import 'package:weatherapp/pages/hourly.dart';
 import '../services/weather_service.dart';
 import 'app_resources.dart';
 import 'daily.dart';
-import 'chart2.dart';
-import 'chart3.dart';
+import 'wind_speed.dart';
+import 'rain_snow.dart';
 
 class WeatherPage extends StatefulWidget {
   const WeatherPage({super.key});
@@ -145,7 +145,7 @@ class _WeatherPageState extends State<WeatherPage> {
                           ),
                         ),
                       ),
-                      LineChartSample2(weather: _weather),
+                      RainSnow(weather: _weather),
                       Align(
                         alignment: Alignment
                             .centerLeft, // Align the container to the left
@@ -176,7 +176,7 @@ class _WeatherPageState extends State<WeatherPage> {
                           ),
                         ),
                       ),
-                      LineChartSample5(weather: _weather),
+                      WindSpeed(weather: _weather),
                       Align(
                         alignment: Alignment
                             .centerLeft, // Align the container to the left

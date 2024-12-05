@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import '../model/weather.dart';
 import 'app_resources.dart';
 
-class LineChartSample5 extends StatefulWidget {
+class WindSpeed extends StatefulWidget {
   final Weather? weather;
 
-  const LineChartSample5({
+  const WindSpeed({
     required this.weather,
     super.key,
     Color? gradientColor1,
@@ -25,10 +25,10 @@ class LineChartSample5 extends StatefulWidget {
   final Color indicatorStrokeColor;
 
   @override
-  State<LineChartSample5> createState() => _LineChartSample5State();
+  State<WindSpeed> createState() => _WindSpeedState();
 }
 
-class _LineChartSample5State extends State<LineChartSample5> {
+class _WindSpeedState extends State<WindSpeed> {
   List<int> showingTooltipOnSpots = [0, 1, 2, 3, 4, 5, 6, 7];
 
   List<FlSpot> get allSpots => [
@@ -45,7 +45,7 @@ class _LineChartSample5State extends State<LineChartSample5> {
   Widget bottomTitleWidgets(double value, TitleMeta meta, double chartWidth) {
     final style = TextStyle(
       fontWeight: FontWeight.bold,
-      color: AppColors.contentColorWhite.withOpacity(0.7),
+      color: AppColors.contentColorWhite.withOpacity(0.4),
       fontFamily: 'Digital',
       fontSize: 18 * chartWidth / 500,
     );
