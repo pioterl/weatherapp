@@ -21,7 +21,7 @@ class _BarChart extends StatelessWidget {
         gridData: FlGridData(
             show: true,
             verticalInterval: 0.125 * 0.1667,
-            horizontalInterval: 2),
+            horizontalInterval: 1),
         alignment: BarChartAlignment.spaceAround,
         maxY: getHighest(),
         minY: getLowest(),
@@ -85,7 +85,7 @@ class _BarChart extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          BoxedIcon(icon, size: 22),
+          BoxedIcon(icon, size: 18),
           Text(hour, style: style),
         ],
       ),
@@ -210,7 +210,7 @@ class HourlyChartState extends State<HourlyChart> {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Container(
-        width: MediaQuery.of(context).size.width * 6,
+        width: MediaQuery.of(context).size.width * 3,
         height: 250,
         child: AspectRatio(
           aspectRatio: 1.9,
