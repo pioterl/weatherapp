@@ -8,6 +8,7 @@ import 'package:weatherapp/pages/hourly.dart';
 import '../services/weather_service.dart';
 import 'app_resources.dart';
 import 'daily.dart';
+import 'hourly_new.dart';
 import 'wind_speed.dart';
 import 'rain_snow.dart';
 
@@ -72,7 +73,14 @@ class _WeatherPageState extends State<WeatherPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(_weather!.cityName),
+                                Text(
+                                  _weather!.cityName.toUpperCase(),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 30.0,
+                                  ),
+                                ),
                                 Text(
                                     "${_weather!.temperature.round()}°C, ${_weather!.mainCondition}"),
                               ],
@@ -85,6 +93,37 @@ class _WeatherPageState extends State<WeatherPage> {
                           ),
                         ],
                       ),
+                      Align(
+                        alignment: Alignment
+                            .centerLeft, // Align the container to the left
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            top: 28.0,
+                            left: 20.0,
+                            bottom: 10,
+                          ), // Add 20 pixels of padding from the left
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: AppColors
+                                  .contentColorCyan, // Background color
+                              borderRadius:
+                                  BorderRadius.circular(2.0), // Rounded corners
+                            ),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 8.0,
+                                vertical: 3.0), // Padding inside the container
+                            child: Text(
+                              "HOURLY",
+                              style: TextStyle(
+                                color: Colors.black87, // Text color
+                                fontWeight: FontWeight.bold, // Bold text
+                                fontSize: 12.0, // Adjust font size
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      HourlyChart(weather: _weather),
                       Align(
                         alignment: Alignment
                             .centerLeft, // Align the container to the left
@@ -177,37 +216,6 @@ class _WeatherPageState extends State<WeatherPage> {
                         ),
                       ),
                       WindSpeed(weather: _weather),
-                      Align(
-                        alignment: Alignment
-                            .centerLeft, // Align the container to the left
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            top: 28.0,
-                            left: 20.0,
-                            bottom: 10,
-                          ), // Add 20 pixels of padding from the left
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: AppColors
-                                  .contentColorCyan, // Background color
-                              borderRadius:
-                                  BorderRadius.circular(2.0), // Rounded corners
-                            ),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 8.0,
-                                vertical: 3.0), // Padding inside the container
-                            child: Text(
-                              "HOURLY",
-                              style: TextStyle(
-                                color: Colors.black87, // Text color
-                                fontWeight: FontWeight.bold, // Bold text
-                                fontSize: 12.0, // Adjust font size
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      HourlyChart(weather: _weather),
                     ],
                   ).animate(effects: [FadeEffect()]),
                 ),

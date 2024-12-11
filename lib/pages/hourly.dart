@@ -19,7 +19,9 @@ class _BarChart extends StatelessWidget {
         borderData: borderData,
         barGroups: barGroups, // Access weather here
         gridData: FlGridData(
-            show: true, verticalInterval: 0.125, horizontalInterval: 2),
+            show: true,
+            verticalInterval: 0.125 * 0.1667,
+            horizontalInterval: 2),
         alignment: BarChartAlignment.spaceAround,
         maxY: getHighest(),
         minY: getLowest(),
@@ -29,14 +31,14 @@ class _BarChart extends StatelessWidget {
 
   double getHighest() {
     return weather?.hourlyWeather
-            .map((e) => e.temperature + 1)
+            .map((e) => e.temperature + 0.6)
             .reduce((a, b) => a > b ? a : b) ??
         30;
   }
 
   double getLowest() {
     return weather?.hourlyWeather
-            .map((e) => e.temperature)
+            .map((e) => e.temperature - 0.6)
             .reduce((a, b) => a < b ? a : b) ??
         -10;
   }
@@ -179,7 +181,7 @@ class _BarChart extends StatelessWidget {
       );
 
   List<BarChartGroupData> get barGroups => List.generate(
-        8,
+        48,
         (index) => BarChartGroupData(
           x: index,
           barRods: [
@@ -205,9 +207,16 @@ class HourlyChart extends StatefulWidget {
 class HourlyChartState extends State<HourlyChart> {
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1.9,
-      child: _BarChart(weather: widget.weather),
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Container(
+        width: MediaQuery.of(context).size.width * 6,
+        height: 250,
+        child: AspectRatio(
+          aspectRatio: 1.9,
+          child: _BarChart(weather: widget.weather),
+        ),
+      ),
     );
   }
 }
