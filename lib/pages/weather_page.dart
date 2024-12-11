@@ -98,7 +98,7 @@ class _WeatherPageState extends State<WeatherPage> {
                             .centerLeft, // Align the container to the left
                         child: Padding(
                           padding: EdgeInsets.only(
-                            top: 28.0,
+                            top: 5.0,
                             left: 20.0,
                             bottom: 10,
                           ), // Add 20 pixels of padding from the left
@@ -129,6 +129,7 @@ class _WeatherPageState extends State<WeatherPage> {
                             .centerLeft, // Align the container to the left
                         child: Padding(
                           padding: EdgeInsets.only(
+                            top: 10,
                             left: 20.0,
                             bottom: 10,
                           ), // Add 20 pixels of padding from the left

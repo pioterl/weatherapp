@@ -171,7 +171,7 @@ class _WindSpeedState extends State<WindSpeed> {
     final tooltipsOnBar = lineBarsData[0];
 
     return AspectRatio(
-      aspectRatio: 2,
+      aspectRatio: 3,
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 27.0,

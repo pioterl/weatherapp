@@ -24,11 +24,11 @@ class _RainSnowState extends State<RainSnow> {
     return Stack(
       children: <Widget>[
         AspectRatio(
-          aspectRatio: 1.7,
+          aspectRatio: 3,
           child: Padding(
             padding: const EdgeInsets.only(
-              right: 30,
-              left: 30,
+              right: 25,
+              left: 25,
               top: 30,
               bottom: 0,
             ),
@@ -187,7 +187,7 @@ class _RainSnowState extends State<RainSnow> {
       gridData: FlGridData(
         show: true,
         drawVerticalLine: true,
-        horizontalInterval: 0.2,
+        horizontalInterval: 0.5,
         verticalInterval: 1,
         getDrawingHorizontalLine: (value) {
           return const FlLine(
@@ -235,7 +235,7 @@ class _RainSnowState extends State<RainSnow> {
       minX: 0,
       maxX: 7,
       minY: 0,
-      maxY: 1.3,
+      maxY: getMaxY(),
       lineBarsData: [
         LineChartBarData(
           spots: [
@@ -290,5 +290,12 @@ class _RainSnowState extends State<RainSnow> {
         ),
       ),
     );
+  }
+
+  double getMaxY() {
+    return (widget.weather!.dailyWeather
+            .map((e) => e.precipProbability)
+            .reduce((a, b) => a > b ? a : b)) +
+        0.3;
   }
 }

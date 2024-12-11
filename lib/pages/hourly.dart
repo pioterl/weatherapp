@@ -78,6 +78,7 @@ class _BarChart extends StatelessWidget {
 
     final hour = getHour(index);
     final icon = getIcon(index);
+    final rain = getRain(index);
 
     return SideTitleWidget(
       axisSide: meta.axisSide,
@@ -85,8 +86,9 @@ class _BarChart extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          BoxedIcon(icon, size: 18),
+          BoxedIcon(icon, size: 17),
           Text(hour, style: style),
+          Text(rain, style: style.copyWith(fontSize: 10)),
         ],
       ),
     );
@@ -145,6 +147,10 @@ class _BarChart extends StatelessWidget {
         .add(Duration(hours: 1))
         .hour
         .toString();
+  }
+
+  String getRain(int i) {
+    return weather!.hourlyWeather[i].precipProbability.round().toString() + '%';
   }
 
   FlTitlesData get titlesData => FlTitlesData(
@@ -211,7 +217,7 @@ class HourlyChartState extends State<HourlyChart> {
       scrollDirection: Axis.horizontal,
       child: Container(
         width: MediaQuery.of(context).size.width * 3,
-        height: 250,
+        height: 230,
         child: AspectRatio(
           aspectRatio: 1.9,
           child: _BarChart(weather: widget.weather),
