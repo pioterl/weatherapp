@@ -31,7 +31,7 @@ class _BarChart extends StatelessWidget {
 
   double getHighest() {
     return weather?.hourlyWeather
-            .map((e) => e.temperature + 0.6)
+            .map((e) => e.temperature + 0.7)
             .reduce((a, b) => a > b ? a : b) ??
         30;
   }
@@ -88,7 +88,11 @@ class _BarChart extends StatelessWidget {
         children: [
           BoxedIcon(icon, size: 17),
           Text(hour, style: style),
-          Text(rain, style: style.copyWith(fontSize: 10)),
+          Text(rain,
+              style: style.copyWith(
+                fontSize: 10,
+                fontWeight: FontWeight.normal,
+              )),
         ],
       ),
     );
