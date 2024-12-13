@@ -296,6 +296,6 @@ class _RainSnowState extends State<RainSnow> {
     return (widget.weather!.dailyWeather
             .map((e) => e.precipProbability)
             .reduce((a, b) => a > b ? a : b)) +
-        0.3;
+        0.5;
   }
 }

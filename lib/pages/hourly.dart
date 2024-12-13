@@ -66,6 +66,41 @@ class _BarChart extends StatelessWidget {
         ),
       );
 
+  Widget getTopTitles(double value, TitleMeta meta) {
+    final style = TextStyle(
+      color: AppColors.contentColorWhite.withOpacity(0.4),
+      fontWeight: FontWeight.bold,
+      fontSize: 14,
+    );
+
+    final index = value.toInt();
+    if (index < 0 || index > 47) {
+      return const SizedBox.shrink();
+    }
+
+    String dayName;
+    if (index <= 23) {
+      dayName = 'Thu';
+    } else {
+      dayName = 'Fri';
+    }
+
+    return SideTitleWidget(
+      axisSide: meta.axisSide,
+      space: 4,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(dayName,
+              style: style.copyWith(
+                fontSize: 10,
+                fontWeight: FontWeight.normal,
+              )),
+        ],
+      ),
+    );
+  }
+
   Widget getTitles(double value, TitleMeta meta) {
     final style = TextStyle(
       color: AppColors.contentColorWhite.withOpacity(0.4),
@@ -87,7 +122,7 @@ class _BarChart extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           BoxedIcon(icon, size: 17),
-          Text(hour, style: style),
+          Text(hour, style: getTextStyle(index)),
           Text(rain,
               style: style.copyWith(
                 fontSize: 10,
@@ -98,23 +133,19 @@ class _BarChart extends StatelessWidget {
     );
   }
 
-  String getDayName(int i) {
-    int weekday = DateTime.fromMillisecondsSinceEpoch(
-      weather!.dailyWeather[i].time * 1000,
-      isUtc: true,
-    ).add(Duration(hours: 1)).weekday;
-
-    String weekdayName = [
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-      'Sunday'
-    ][weekday - 1];
-
-    return weekdayName.substring(0, 3);
+  TextStyle getTextStyle(int index) {
+    int hour = int.parse(getHour(index));
+    if (hour >= 7 && hour <= 19) {
+      return TextStyle(
+        color: Colors.orange.shade300,
+        fontWeight: FontWeight.bold,
+        fontSize: 14,
+      );
+    } else {
+      return TextStyle(
+        fontWeight: FontWeight.bold,
+      );
+    }
   }
 
   IconData getIcon(int i) {
@@ -153,8 +184,33 @@ class _BarChart extends StatelessWidget {
         .toString();
   }
 
+  String getDayName(int i) {
+    if (i < 0 || i >= weather!.dailyWeather.length) {
+      return '';
+    }
+    int weekday = DateTime.fromMillisecondsSinceEpoch(
+      weather!.dailyWeather[i].time * 1000,
+      isUtc: true,
+    ).add(Duration(hours: 1)).weekday;
+
+    String weekdayName = [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday'
+    ][weekday - 1];
+
+    return weekdayName;
+  }
+
   String getRain(int i) {
-    return weather!.hourlyWeather[i].precipProbability.round().toString() + '%';
+    return (weather!.hourlyWeather[i].precipProbability * 100)
+            .round()
+            .toString() +
+        '%';
   }
 
   FlTitlesData get titlesData => FlTitlesData(
@@ -169,8 +225,12 @@ class _BarChart extends StatelessWidget {
         leftTitles: const AxisTitles(
           sideTitles: SideTitles(showTitles: false),
         ),
-        topTitles: const AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
+        topTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: false,
+            reservedSize: 20,
+            getTitlesWidget: getTopTitles,
+          ),
         ),
         rightTitles: const AxisTitles(
           sideTitles: SideTitles(showTitles: false),
