@@ -21,27 +21,27 @@ class _BarChart extends StatelessWidget {
         gridData: FlGridData(
             show: true,
             verticalInterval: 0.125 * 0.1667,
-            horizontalInterval: 1),
+            horizontalInterval: getHighestTemperature() / 2.999),
         alignment: BarChartAlignment.spaceAround,
-        maxY: getHighest(),
-        minY: getLowest(),
+        maxY: getHighestTemperature(),
+        minY: 0,
       ),
     );
   }
 
-  double getHighest() {
+  double getHighestTemperature() {
     return weather?.hourlyWeather
-            .map((e) => e.temperature + 0.7)
+            .map((e) => e.temperature * 1.2)
             .reduce((a, b) => a > b ? a : b) ??
         30;
   }
 
-  double getLowest() {
-    return weather?.hourlyWeather
-            .map((e) => e.temperature - 0.6)
-            .reduce((a, b) => a < b ? a : b) ??
-        -10;
-  }
+  // double getLowest() {
+  //   return weather?.hourlyWeather
+  //           .map((e) => e.temperature - 0.6)
+  //           .reduce((a, b) => a < b ? a : b) ??
+  //       -10;
+  // }
 
   BarTouchData get barTouchData => BarTouchData(
         enabled: false,

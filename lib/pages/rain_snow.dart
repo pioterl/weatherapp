@@ -295,7 +295,7 @@ class _RainSnowState extends State<RainSnow> {
   double getMaxY() {
     return (widget.weather!.dailyWeather
             .map((e) => e.precipProbability)
-            .reduce((a, b) => a > b ? a : b)) +
-        0.5;
+            .reduce((a, b) => a > b ? a : b)) *
+        1.6;
   }
 }
