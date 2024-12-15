@@ -8,9 +8,8 @@ import 'package:weatherapp/pages/hourly.dart';
 import '../services/weather_service.dart';
 import 'app_resources.dart';
 import 'daily.dart';
-import 'hourly_new.dart';
-import 'wind_speed.dart';
 import 'rain_snow.dart';
+import 'wind_speed.dart';
 
 class WeatherPage extends StatefulWidget {
   const WeatherPage({super.key});

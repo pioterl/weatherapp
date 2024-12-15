@@ -111,9 +111,10 @@ class _BarChart extends StatelessWidget {
     final index = value.toInt();
     if (index < 0 || index > 47) return const SizedBox.shrink();
 
-    final hour = getHour(index);
-    final icon = getIcon(index);
+    final String hour = getHour(index);
+    final IconData icon = getIcon(index);
     final String rain = getRain(index);
+    final String wind = getWind(index);
 
     return SideTitleWidget(
       axisSide: meta.axisSide,
@@ -130,9 +131,49 @@ class _BarChart extends StatelessWidget {
             rain,
             style: getTextStyleRain(style, index),
           ),
+          Text(
+            wind,
+            style: getTextStyleWind(style, index),
+          ),
         ],
       ),
     );
+  }
+
+  TextStyle getTextStyleWind(TextStyle style, int index) {
+    double probability = weather!.hourlyWeather[index].windSpeed;
+
+    if (probability > 45) {
+      return style.copyWith(
+        color: AppColors.contentColorRed,
+        fontSize: 10,
+        fontWeight: FontWeight.normal,
+      );
+    } else if (probability > 40) {
+      return style.copyWith(
+        color: AppColors.contentColorRed.withOpacity(0.8),
+        fontSize: 10,
+        fontWeight: FontWeight.normal,
+      );
+    } else if (probability > 35) {
+      return style.copyWith(
+        color: AppColors.contentColorRed.withOpacity(0.7),
+        fontSize: 10,
+        fontWeight: FontWeight.normal,
+      );
+    } else if (probability > 30) {
+      return style.copyWith(
+        color: AppColors.contentColorRed.withOpacity(0.6),
+        fontSize: 10,
+        fontWeight: FontWeight.normal,
+      );
+    } else {
+      return style.copyWith(
+        color: AppColors.contentColorRed.withOpacity(0.2),
+        fontSize: 10,
+        fontWeight: FontWeight.normal,
+      );
+    }
   }
 
   TextStyle getTextStyleRain(TextStyle style, int index) {
@@ -263,6 +304,10 @@ class _BarChart extends StatelessWidget {
     return weekdayName;
   }
 
+  String getWind(int i) {
+    return (weather!.hourlyWeather[i].windSpeed).round().toString();
+  }
+
   String getRain(int i) {
     return (weather!.hourlyWeather[i].precipProbability * 100)
             .round()
@@ -275,7 +320,7 @@ class _BarChart extends StatelessWidget {
         bottomTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
-            reservedSize: 70,
+            reservedSize: 77,
             getTitlesWidget: getTitles,
           ),
         ),
