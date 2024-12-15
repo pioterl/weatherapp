@@ -97,7 +97,10 @@ class _WindSpeedState extends State<WindSpeed> {
             MainAxisSize.min, // Ensure the column does not take extra space
         children: [
           Text(dayNum, style: style), // Main text
-          Text(dayName, style: style.copyWith(fontSize: 10)), // Secondary text
+          Text(
+            dayName,
+            style: style.copyWith(fontSize: 10, fontWeight: FontWeight.normal),
+          ), // Secondary text
         ],
       ),
     );
@@ -175,7 +178,7 @@ class _WindSpeedState extends State<WindSpeed> {
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 27.0,
-          vertical: 10,
+          vertical: 20,
         ),
         child: LayoutBuilder(builder: (context, constraints) {
           return LineChart(

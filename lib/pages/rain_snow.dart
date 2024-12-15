@@ -93,7 +93,10 @@ class _RainSnowState extends State<RainSnow> {
             MainAxisSize.min, // Ensure the column does not take extra space
         children: [
           Text(dayNum, style: style), // Main text
-          Text(dayName, style: style.copyWith(fontSize: 10)), // Secondary text
+          Text(
+            dayName,
+            style: style.copyWith(fontSize: 10, fontWeight: FontWeight.normal),
+          ), // Secondary text
         ],
       ),
     );
@@ -296,6 +299,6 @@ class _RainSnowState extends State<RainSnow> {
     return (widget.weather!.dailyWeather
             .map((e) => e.precipProbability)
             .reduce((a, b) => a > b ? a : b)) *
-        1.6;
+        1.5;
   }
 }

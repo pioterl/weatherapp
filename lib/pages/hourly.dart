@@ -113,7 +113,7 @@ class _BarChart extends StatelessWidget {
 
     final hour = getHour(index);
     final icon = getIcon(index);
-    final rain = getRain(index);
+    final String rain = getRain(index);
 
     return SideTitleWidget(
       axisSide: meta.axisSide,
@@ -122,27 +122,84 @@ class _BarChart extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           BoxedIcon(icon, size: 17),
-          Text(hour, style: getTextStyle(index)),
-          Text(rain,
-              style: style.copyWith(
-                fontSize: 10,
-                fontWeight: FontWeight.normal,
-              )),
+          Text(
+            hour,
+            style: getTextStyleHour(index),
+          ),
+          Text(
+            rain,
+            style: getTextStyleRain(style, index),
+          ),
         ],
       ),
     );
   }
 
-  TextStyle getTextStyle(int index) {
+  TextStyle getTextStyleRain(TextStyle style, int index) {
+    double probability = weather!.hourlyWeather[index].precipProbability * 100;
+
+    if (probability > 90) {
+      return style.copyWith(
+        color: AppColors.contentColorCyan,
+        fontSize: 10,
+        fontWeight: FontWeight.normal,
+      );
+    } else if (probability > 80) {
+      return style.copyWith(
+        color: AppColors.contentColorCyan.withOpacity(0.8),
+        fontSize: 10,
+        fontWeight: FontWeight.normal,
+      );
+    } else if (probability > 70) {
+      return style.copyWith(
+        color: AppColors.contentColorCyan.withOpacity(0.7),
+        fontSize: 10,
+        fontWeight: FontWeight.normal,
+      );
+    } else if (probability > 60) {
+      return style.copyWith(
+        color: AppColors.contentColorCyan.withOpacity(0.6),
+        fontSize: 10,
+        fontWeight: FontWeight.normal,
+      );
+    } else if (probability > 50) {
+      return style.copyWith(
+        color: AppColors.contentColorCyan.withOpacity(0.5),
+        fontSize: 10,
+        fontWeight: FontWeight.normal,
+      );
+    } else if (probability > 40) {
+      return style.copyWith(
+        color: AppColors.contentColorCyan.withOpacity(0.4),
+        fontSize: 10,
+        fontWeight: FontWeight.normal,
+      );
+    } else if (probability > 30) {
+      return style.copyWith(
+        color: AppColors.contentColorCyan.withOpacity(0.3),
+        fontSize: 10,
+        fontWeight: FontWeight.normal,
+      );
+    } else {
+      return style.copyWith(
+        color: AppColors.contentColorCyan.withOpacity(0.2),
+        fontSize: 10,
+        fontWeight: FontWeight.normal,
+      );
+    }
+  }
+
+  TextStyle getTextStyleHour(int index) {
     int hour = int.parse(getHour(index));
     if (hour >= 7 && hour <= 19) {
       return TextStyle(
-        color: Colors.orange.shade300,
+        color: Colors.orange.shade300.withOpacity(0.8),
         fontWeight: FontWeight.bold,
         fontSize: 14,
       );
     } else {
       return TextStyle(
+        color: AppColors.contentColorWhite.withOpacity(0.4),
         fontWeight: FontWeight.bold,
       );
     }

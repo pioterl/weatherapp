@@ -162,7 +162,7 @@ class _WeatherPageState extends State<WeatherPage> {
                           padding: EdgeInsets.only(
                             top: 25.0,
                             left: 20.0,
-                            bottom: 0,
+                            bottom: 10,
                           ), // Add 20 pixels of padding from the left
                           child: Container(
                             decoration: BoxDecoration(

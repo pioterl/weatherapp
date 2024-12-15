@@ -129,7 +129,10 @@ class _BarChart extends StatelessWidget {
         children: [
           BoxedIcon(icon!, size: 22),
           Text(dayNum, style: style),
-          Text(dayName, style: style.copyWith(fontSize: 10)),
+          Text(
+            dayName,
+            style: style.copyWith(fontSize: 10, fontWeight: FontWeight.normal),
+          ),
         ],
       ),
     );
