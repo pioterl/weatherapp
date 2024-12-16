@@ -31,7 +31,7 @@ class _BarChart extends StatelessWidget {
 
   double getHighestTemperature() {
     return weather?.hourlyWeather
-            .map((e) => e.temperature * 1.25)
+            .map((e) => e.temperature * 1.3)
             .reduce((a, b) => a > b ? a : b) ??
         30;
   }
@@ -78,11 +78,13 @@ class _BarChart extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    String dayName;
-    if (index <= 23) {
-      dayName = 'Thu';
-    } else {
-      dayName = 'Fri';
+    String dayName = '';
+    if (index == 0) {
+      dayName = getDayName(index).substring(0, 3);
+    }
+    int hour = int.parse(getHour(index));
+    if (hour == 12 && index != 0) {
+      dayName = getDayName(index).substring(0, 3);
     }
 
     return SideTitleWidget(
@@ -291,11 +293,11 @@ class _BarChart extends StatelessWidget {
   }
 
   String getDayName(int i) {
-    if (i < 0 || i >= weather!.dailyWeather.length) {
+    if (i < 0 || i >= weather!.hourlyWeather.length) {
       return '';
     }
     int weekday = DateTime.fromMillisecondsSinceEpoch(
-      weather!.dailyWeather[i].time * 1000,
+      weather!.hourlyWeather[i].time * 1000,
       isUtc: true,
     ).add(Duration(hours: 1)).weekday;
 
@@ -336,7 +338,7 @@ class _BarChart extends StatelessWidget {
         ),
         topTitles: AxisTitles(
           sideTitles: SideTitles(
-            showTitles: false,
+            showTitles: true,
             reservedSize: 20,
             getTitlesWidget: getTopTitles,
           ),
@@ -388,7 +390,7 @@ class HourlyChartState extends State<HourlyChart> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width * 3,
         height: 230,
         child: AspectRatio(
