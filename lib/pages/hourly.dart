@@ -20,7 +20,7 @@ class _BarChart extends StatelessWidget {
         barGroups: barGroups, // Access weather here
         gridData: FlGridData(
             show: true,
-            verticalInterval: 0.125 * 0.1667,
+            verticalInterval: 0.02082,
             horizontalInterval: getHighestTemperature() / 2.999),
         alignment: BarChartAlignment.spaceAround,
         maxY: getHighestTemperature(),
@@ -48,7 +48,7 @@ class _BarChart extends StatelessWidget {
         touchTooltipData: BarTouchTooltipData(
           getTooltipColor: (group) => Colors.transparent,
           tooltipPadding: EdgeInsets.zero,
-          tooltipMargin: 8,
+          tooltipMargin: 2,
           getTooltipItem: (
             BarChartGroupData group,
             int groupIndex,
@@ -93,11 +93,21 @@ class _BarChart extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(dayName,
-              style: style.copyWith(
-                fontSize: 10,
-                fontWeight: FontWeight.normal,
-              )),
+          if (index == 0 || index == 1)
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Text(dayName,
+                  style: style.copyWith(
+                    fontSize: 11,
+                    fontWeight: FontWeight.normal,
+                  )),
+            )
+          else
+            Text(dayName,
+                style: style.copyWith(
+                  fontSize: 11,
+                  fontWeight: FontWeight.normal,
+                )),
         ],
       ),
     );
@@ -391,11 +401,14 @@ class HourlyChartState extends State<HourlyChart> {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: SizedBox(
-        width: MediaQuery.of(context).size.width * 3,
+        width: MediaQuery.of(context).size.width * 3.03,
         height: 230,
-        child: AspectRatio(
-          aspectRatio: 1.9,
-          child: _BarChart(weather: widget.weather),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 13),
+          child: AspectRatio(
+            aspectRatio: 1.9,
+            child: _BarChart(weather: widget.weather),
+          ),
         ),
       ),
     );
