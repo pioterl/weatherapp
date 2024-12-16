@@ -116,7 +116,7 @@ class _WeatherPageState extends State<WeatherPage> {
                               style: TextStyle(
                                 color: Colors.black87, // Text color
                                 fontWeight: FontWeight.bold, // Bold text
-                                fontSize: 12.0, // Adjust font size
+                                fontSize: 13.0, // Adjust font size
                               ),
                             ),
                           ),
@@ -147,7 +147,7 @@ class _WeatherPageState extends State<WeatherPage> {
                               style: TextStyle(
                                 color: Colors.black87, // Text color
                                 fontWeight: FontWeight.bold, // Bold text
-                                fontSize: 12.0, // Adjust font size
+                                fontSize: 13.0, // Adjust font size
                               ),
                             ),
                           ),
@@ -178,7 +178,7 @@ class _WeatherPageState extends State<WeatherPage> {
                               style: TextStyle(
                                 color: Colors.black87, // Text color
                                 fontWeight: FontWeight.bold, // Bold text
-                                fontSize: 12.0, // Adjust font size
+                                fontSize: 13.0, // Adjust font size
                               ),
                             ),
                           ),
@@ -209,7 +209,7 @@ class _WeatherPageState extends State<WeatherPage> {
                               style: TextStyle(
                                 color: Colors.black87, // Text color
                                 fontWeight: FontWeight.bold, // Bold text
-                                fontSize: 12.0, // Adjust font size
+                                fontSize: 13.0, // Adjust font size
                               ),
                             ),
                           ),

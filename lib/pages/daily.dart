@@ -131,7 +131,7 @@ class _BarChart extends StatelessWidget {
           Text(dayNum, style: style),
           Text(
             dayName,
-            style: style.copyWith(fontSize: 10, fontWeight: FontWeight.normal),
+            style: style.copyWith(fontSize: 11, fontWeight: FontWeight.normal),
           ),
         ],
       ),
@@ -198,7 +198,7 @@ class _BarChart extends StatelessWidget {
         bottomTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
-            reservedSize: 70,
+            reservedSize: 72,
             getTitlesWidget: getTitles,
           ),
         ),

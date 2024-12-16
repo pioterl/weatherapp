@@ -31,7 +31,7 @@ class _BarChart extends StatelessWidget {
 
   double getHighestTemperature() {
     return weather?.hourlyWeather
-            .map((e) => e.temperature * 1.2)
+            .map((e) => e.temperature * 1.25)
             .reduce((a, b) => a > b ? a : b) ??
         30;
   }
@@ -143,34 +143,41 @@ class _BarChart extends StatelessWidget {
   TextStyle getTextStyleWind(TextStyle style, int index) {
     double probability = weather!.hourlyWeather[index].windSpeed;
 
+    double fontSize = 11;
     if (probability > 45) {
       return style.copyWith(
         color: AppColors.contentColorRed,
-        fontSize: 10,
+        fontSize: fontSize,
         fontWeight: FontWeight.normal,
       );
     } else if (probability > 40) {
       return style.copyWith(
         color: AppColors.contentColorRed.withOpacity(0.8),
-        fontSize: 10,
+        fontSize: fontSize,
         fontWeight: FontWeight.normal,
       );
     } else if (probability > 35) {
       return style.copyWith(
         color: AppColors.contentColorRed.withOpacity(0.7),
-        fontSize: 10,
+        fontSize: fontSize,
         fontWeight: FontWeight.normal,
       );
     } else if (probability > 30) {
       return style.copyWith(
         color: AppColors.contentColorRed.withOpacity(0.6),
-        fontSize: 10,
+        fontSize: fontSize,
+        fontWeight: FontWeight.normal,
+      );
+    } else if (probability > 20) {
+      return style.copyWith(
+        color: AppColors.contentColorRed.withOpacity(0.5),
+        fontSize: fontSize,
         fontWeight: FontWeight.normal,
       );
     } else {
       return style.copyWith(
         color: AppColors.contentColorRed.withOpacity(0.2),
-        fontSize: 10,
+        fontSize: fontSize,
         fontWeight: FontWeight.normal,
       );
     }
@@ -179,52 +186,53 @@ class _BarChart extends StatelessWidget {
   TextStyle getTextStyleRain(TextStyle style, int index) {
     double probability = weather!.hourlyWeather[index].precipProbability * 100;
 
+    double fontSize = 11;
     if (probability > 90) {
       return style.copyWith(
         color: AppColors.contentColorCyan,
-        fontSize: 10,
+        fontSize: fontSize,
         fontWeight: FontWeight.normal,
       );
     } else if (probability > 80) {
       return style.copyWith(
         color: AppColors.contentColorCyan.withOpacity(0.8),
-        fontSize: 10,
+        fontSize: fontSize,
         fontWeight: FontWeight.normal,
       );
     } else if (probability > 70) {
       return style.copyWith(
         color: AppColors.contentColorCyan.withOpacity(0.7),
-        fontSize: 10,
+        fontSize: fontSize,
         fontWeight: FontWeight.normal,
       );
     } else if (probability > 60) {
       return style.copyWith(
         color: AppColors.contentColorCyan.withOpacity(0.6),
-        fontSize: 10,
+        fontSize: fontSize,
         fontWeight: FontWeight.normal,
       );
     } else if (probability > 50) {
       return style.copyWith(
         color: AppColors.contentColorCyan.withOpacity(0.5),
-        fontSize: 10,
+        fontSize: fontSize,
         fontWeight: FontWeight.normal,
       );
     } else if (probability > 40) {
       return style.copyWith(
         color: AppColors.contentColorCyan.withOpacity(0.4),
-        fontSize: 10,
+        fontSize: fontSize,
         fontWeight: FontWeight.normal,
       );
     } else if (probability > 30) {
       return style.copyWith(
         color: AppColors.contentColorCyan.withOpacity(0.3),
-        fontSize: 10,
+        fontSize: fontSize,
         fontWeight: FontWeight.normal,
       );
     } else {
       return style.copyWith(
         color: AppColors.contentColorCyan.withOpacity(0.2),
-        fontSize: 10,
+        fontSize: fontSize,
         fontWeight: FontWeight.normal,
       );
     }
@@ -310,9 +318,8 @@ class _BarChart extends StatelessWidget {
 
   String getRain(int i) {
     return (weather!.hourlyWeather[i].precipProbability * 100)
-            .round()
-            .toString() +
-        '%';
+        .round()
+        .toString();
   }
 
   FlTitlesData get titlesData => FlTitlesData(
@@ -320,7 +327,7 @@ class _BarChart extends StatelessWidget {
         bottomTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
-            reservedSize: 77,
+            reservedSize: 82,
             getTitlesWidget: getTitles,
           ),
         ),

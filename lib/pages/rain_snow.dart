@@ -95,7 +95,7 @@ class _RainSnowState extends State<RainSnow> {
           Text(dayNum, style: style), // Main text
           Text(
             dayName,
-            style: style.copyWith(fontSize: 10, fontWeight: FontWeight.normal),
+            style: style.copyWith(fontSize: 11, fontWeight: FontWeight.normal),
           ), // Secondary text
         ],
       ),

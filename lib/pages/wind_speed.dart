@@ -99,7 +99,7 @@ class _WindSpeedState extends State<WindSpeed> {
           Text(dayNum, style: style), // Main text
           Text(
             dayName,
-            style: style.copyWith(fontSize: 10, fontWeight: FontWeight.normal),
+            style: style.copyWith(fontSize: 11, fontWeight: FontWeight.normal),
           ), // Secondary text
         ],
       ),
@@ -280,7 +280,7 @@ class _WindSpeedState extends State<WindSpeed> {
                         constraints.maxWidth,
                       );
                     },
-                    reservedSize: 40,
+                    reservedSize: 42,
                   ),
                 ),
                 rightTitles: const AxisTitles(
