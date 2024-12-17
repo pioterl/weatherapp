@@ -79,7 +79,7 @@ class _BarChart extends StatelessWidget {
     }
 
     String dayName = '';
-    if (index == 0) {
+    if (index == 0 && getDayName(0) != getDayName(12)) {
       dayName = getDayName(index).substring(0, 3);
     }
     int hour = int.parse(getHour(index));
