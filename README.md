@@ -1,5 +1,5 @@
 # weatherapp
 
-Simple weather app.
+Simple weather app written to learn Flutter. Code is a mess, but it works! Of course i will refactor it someday... :)
 
-![WeatherApp](Screenshot_20241127_223629.png)
+![WeatherApp](Screenshot.png)

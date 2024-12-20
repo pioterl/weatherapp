@@ -21,6 +21,7 @@ class WeatherPage extends StatefulWidget {
 class _WeatherPageState extends State<WeatherPage> {
   late final WeatherService _weatherService;
   Weather? _weather;
+  bool _showWeatherInfo = false;
 
   @override
   void initState() {
@@ -87,40 +88,82 @@ class _WeatherPageState extends State<WeatherPage> {
                           ),
                           Spacer(),
                           Padding(
-                            padding: const EdgeInsets.all(10.0),
+                            padding: const EdgeInsets.all(5.0),
                             child: BoxedIcon(getIcon(_weather!.icon), size: 44),
                           ),
                         ],
                       ),
-                      Align(
-                        alignment: Alignment
-                            .centerLeft, // Align the container to the left
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            top: 5.0,
-                            left: 20.0,
-                            bottom: 10,
-                          ), // Add 20 pixels of padding from the left
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: AppColors
-                                  .contentColorCyan, // Background color
-                              borderRadius:
-                                  BorderRadius.circular(2.0), // Rounded corners
-                            ),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 8.0,
-                                vertical: 3.0), // Padding inside the container
-                            child: Text(
-                              "HOURLY",
-                              style: TextStyle(
-                                color: Colors.black87, // Text color
-                                fontWeight: FontWeight.bold, // Bold text
-                                fontSize: 13.0, // Adjust font size
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                top: 5.0,
+                                left: 20.0,
+                                bottom: 10,
+                              ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: AppColors.contentColorCyan,
+                                  borderRadius: BorderRadius.circular(2.0),
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 8.0, vertical: 3.0),
+                                child: Text(
+                                  "HOURLY",
+                                  style: TextStyle(
+                                    color: Colors.black87,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13.0,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
+                          _showWeatherInfo
+                              ? _buildWeatherInfo().animate(
+                                  effects: [FadeEffect()],
+                                )
+                              : Container(),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                top: 4.0,
+                                left: 0.0,
+                                bottom: 10,
+                              ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.transparent,
+                                  borderRadius: BorderRadius.circular(2.0),
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 8.0, vertical: 3.0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _showWeatherInfo = !_showWeatherInfo;
+                                    });
+                                  },
+                                  child: _showWeatherInfo
+                                      ? Icon(
+                                          Icons.info_outline,
+                                          color: Colors.white,
+                                          size: 20,
+                                        )
+                                      : Icon(
+                                          Icons.info_outline,
+                                          color: Colors.white.withOpacity(0.4),
+                                          size: 20,
+                                        ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       HourlyChart(weather: _weather),
                       Align(
@@ -174,7 +217,7 @@ class _WeatherPageState extends State<WeatherPage> {
                                 horizontal: 8.0,
                                 vertical: 3.0), // Padding inside the container
                             child: Text(
-                              "CHANCE OF RAIN/SNOW",
+                              "PRECIPITATION - %",
                               style: TextStyle(
                                 color: Colors.black87, // Text color
                                 fontWeight: FontWeight.bold, // Bold text
@@ -205,7 +248,7 @@ class _WeatherPageState extends State<WeatherPage> {
                                 horizontal: 8.0,
                                 vertical: 3.0), // Padding inside the container
                             child: Text(
-                              "WIND SPEED",
+                              "WIND SPEED - KMH",
                               style: TextStyle(
                                 color: Colors.black87, // Text color
                                 fontWeight: FontWeight.bold, // Bold text
@@ -221,6 +264,114 @@ class _WeatherPageState extends State<WeatherPage> {
                 ),
               ),
       ),
+    );
+  }
+
+  Widget _buildWeatherInfo() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Align(
+          alignment: Alignment.center,
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: 5.0,
+              left: 7.0,
+              bottom: 10,
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(2.0),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 3.0),
+              child: Text(
+                "NIGHT",
+                style: TextStyle(
+                  color: AppColors.contentColorWhite.withOpacity(0.4),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 11,
+                ),
+              ),
+            ),
+          ),
+        ),
+        Align(
+          alignment: Alignment.center,
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: 5.0,
+              left: 0.0,
+              bottom: 10,
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(2.0),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 3.0),
+              child: Text(
+                "DAY",
+                style: TextStyle(
+                  color: Colors.orange.shade300.withOpacity(0.8),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 11,
+                ),
+              ),
+            ),
+          ),
+        ),
+        Align(
+          alignment: Alignment.center,
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: 5.0,
+              left: 0.0,
+              bottom: 10,
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(2.0),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 3.0),
+              child: Text(
+                "PRECIPITATION - %",
+                style: TextStyle(
+                  color: AppColors.contentColorCyan,
+                  fontSize: 11,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+            ),
+          ),
+        ),
+        Align(
+          alignment: Alignment.center,
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: 5.0,
+              left: 0.0,
+              bottom: 10,
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(2.0),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 3.0),
+              child: Text(
+                "WIND - KMH",
+                style: TextStyle(
+                  color: AppColors.contentColorRed,
+                  fontSize: 11,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
