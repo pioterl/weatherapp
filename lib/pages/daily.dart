@@ -41,11 +41,7 @@ class _BarChart extends StatelessWidget {
             .map((e) => e.temperatureHigh)
             .reduce((a, b) => a < b ? a : b) ??
         0;
-    if (lowestTemperature > 0) {
-      return 0;
-    } else {
-      return lowestTemperature - 1.25;
-    }
+    return lowestTemperature < 0 ? lowestTemperature - 1.25 : 0;
   }
 
   BarTouchData get barTouchData => BarTouchData(
