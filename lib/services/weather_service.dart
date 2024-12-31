@@ -14,7 +14,7 @@ class WeatherService {
 
   Future<Weather> getWeather(List<String> positions) async {
     // final response = await http
-    // .get(Uri.parse('$BASE_URL/$apiKey/51.759445%2C%2019.457216?units=ca'));
+    //     .get(Uri.parse('$BASE_URL/$apiKey/51.759445%2C%2019.457216?units=ca'));
     final response = await http.get(Uri.parse(
         '$BASE_URL/$apiKey/${positions[1]},${positions[2]}?units=ca'));
 

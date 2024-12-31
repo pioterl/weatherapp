@@ -21,7 +21,7 @@ class _BarChart extends StatelessWidget {
         gridData: FlGridData(
             show: true,
             verticalInterval: 0.125,
-            horizontalInterval: getMaxY() / 2.999),
+            horizontalInterval: getMaxY() / 2.5),
         alignment: BarChartAlignment.spaceAround,
         maxY: getMaxY(),
         minY: getMinY(),
@@ -41,7 +41,15 @@ class _BarChart extends StatelessWidget {
             .map((e) => e.temperatureHigh)
             .reduce((a, b) => a < b ? a : b) ??
         0;
-    return lowestTemperature < 0 ? lowestTemperature - 1.25 : 0;
+    return lowestTemperature < 0 ? calculateMinYBelow0(lowestTemperature) : 0;
+  }
+
+  double calculateMinYBelow0(double lowestTemperature) {
+    if (lowestTemperature > -3) {
+      return lowestTemperature - 3.0;
+    } else {
+      return lowestTemperature * 1.4;
+    }
   }
 
   BarTouchData get barTouchData => BarTouchData(
