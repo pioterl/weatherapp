@@ -49,6 +49,8 @@ class _WeatherPageState extends State<WeatherPage> {
 
   @override
   Widget build(BuildContext context) {
+    const int MAX_LENGTH = 12;
+
     return SafeArea(
       child: Scaffold(
         body: _weather?.dailyWeather == null
@@ -75,7 +77,9 @@ class _WeatherPageState extends State<WeatherPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  _weather!.cityName.toUpperCase(),
+                                  _weather!.cityName.length > MAX_LENGTH
+                                      ? "${_weather!.cityName.substring(0, MAX_LENGTH).toUpperCase()}..."
+                                      : _weather!.cityName.toUpperCase(),
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
