@@ -90,11 +90,11 @@ class _WeatherPageState extends State<WeatherPage> {
                           ),
                           Spacer(),
                           Padding(
-                            padding: const EdgeInsets.all(5.0),
+                            padding: const EdgeInsets.only(right: 5.0),
                             child: Image.asset(
                               IconService.getIcon(_weather!, 0),
-                              width: 44,
-                              height: 44,
+                              width: 100,
+                              height: 100,
                             ),
                           ),
                         ],
