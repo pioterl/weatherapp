@@ -6,6 +6,7 @@ import 'package:weatherapp/model/weather.dart';
 import 'package:weatherapp/pages/hourly.dart';
 
 import '../services/weather_service.dart';
+import '../util/icon_service.dart';
 import 'app_resources.dart';
 import 'daily.dart';
 import 'rain_snow.dart';
@@ -50,7 +51,7 @@ class _WeatherPageState extends State<WeatherPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: _weather?.temperature == null
+        body: _weather?.dailyWeather == null
             ? Center(
                 child: CircularProgressIndicator(
                   color: Colors.grey,
@@ -82,14 +83,19 @@ class _WeatherPageState extends State<WeatherPage> {
                                   ),
                                 ),
                                 Text(
-                                    "${_weather!.temperature.round()}°C, ${_weather!.mainCondition}"),
+                                    "${_weather!.dailyWeather.elementAt(0).air_temperature.round()}°C, "
+                                    "${_weather!.dailyWeather.elementAt(0).icon_1h}"),
                               ],
                             ),
                           ),
                           Spacer(),
                           Padding(
                             padding: const EdgeInsets.all(5.0),
-                            child: BoxedIcon(getIcon(_weather!.icon), size: 44),
+                            child: Image.asset(
+                              IconService.getIcon(_weather!, 0),
+                              width: 44,
+                              height: 44,
+                            ),
                           ),
                         ],
                       ),
@@ -196,7 +202,7 @@ class _WeatherPageState extends State<WeatherPage> {
                           ),
                         ),
                       ),
-                      DailyChart(weather: _weather),
+                      // DailyChart(weather: _weather),
                       Align(
                         alignment: Alignment
                             .centerLeft, // Align the container to the left
@@ -227,7 +233,7 @@ class _WeatherPageState extends State<WeatherPage> {
                           ),
                         ),
                       ),
-                      RainSnow(weather: _weather),
+                      // RainSnow(weather: _weather),
                       Align(
                         alignment: Alignment
                             .centerLeft, // Align the container to the left
@@ -258,7 +264,7 @@ class _WeatherPageState extends State<WeatherPage> {
                           ),
                         ),
                       ),
-                      WindSpeed(weather: _weather),
+                      // WindSpeed(weather: _weather),
                     ],
                   ).animate(effects: [FadeEffect()]),
                 ),

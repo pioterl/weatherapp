@@ -13,13 +13,19 @@ class WeatherService {
   WeatherService({required this.apiKey});
 
   Future<Weather> getWeather(List<String> positions) async {
-    final response = await http
-        .get(Uri.parse('$BASE_URL/$apiKey/51.759445%2C%2019.457216?units=ca'));
+    // final response = await http
+    //     .get(Uri.parse('$BASE_URL/$apiKey/51.1642%2C%2023.4716?units=ca'));
+    final http.Response response = await http.get(
+        Uri.parse(
+            'https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=51.759445&lon=19.457216'),
+        headers: {'User-Agent': 'WeatherApp/1.0'});
     // final response = await http.get(Uri.parse(
     //     '$BASE_URL/$apiKey/${positions[1]},${positions[2]}?units=ca'));
 
     if (response.statusCode == 200) {
-      return Weather.fromJson(jsonDecode(response.body), positions.first);
+      Weather weather =
+          Weather.fromJson(jsonDecode(response.body), positions.first);
+      return weather;
     } else {
       throw Exception('Failed to load weather');
     }

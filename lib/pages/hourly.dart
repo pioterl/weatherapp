@@ -1,12 +1,14 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:weather_icons/weather_icons.dart';
 
+import '../util/icon_service.dart';
 import '../model/weather.dart';
 import 'app_resources.dart';
 
 class _BarChart extends StatelessWidget {
   final Weather? weather;
+
+  static const double TO_KMH_MULTIPLIER = 3.6;
 
   const _BarChart({required this.weather});
 
@@ -20,8 +22,8 @@ class _BarChart extends StatelessWidget {
         barGroups: barGroups, // Access weather here
         gridData: FlGridData(
             show: true,
-            verticalInterval: 0.02082,
-            horizontalInterval: getMaxY() / 2),
+            verticalInterval: 0.01588,
+            horizontalInterval: getMaxY() / 2.999),
         alignment: BarChartAlignment.spaceAround,
         maxY: getMaxY(),
         minY: getMinY(),
@@ -30,15 +32,15 @@ class _BarChart extends StatelessWidget {
   }
 
   double getMaxY() {
-    return weather?.hourlyWeather
-            .map((e) => e.temperature * 1.8)
+    return weather?.dailyWeather
+            .map((e) => e.air_temperature * 1.4)
             .reduce((a, b) => a > b ? a : b) ??
         30;
   }
 
   double getMinY() {
-    double lowestTemperature = weather?.hourlyWeather
-            .map((e) => e.temperature)
+    double lowestTemperature = weather?.dailyWeather
+            .map((e) => e.air_temperature)
             .reduce((a, b) => a < b ? a : b) ??
         0;
     return lowestTemperature < 0 ? calculateMinYBelow0(lowestTemperature) : 0;
@@ -94,7 +96,7 @@ class _BarChart extends StatelessWidget {
     );
 
     final index = value.toInt();
-    if (index < 0 || index > 47) {
+    if (index < 0 || index > 63) {
       return const SizedBox.shrink();
     }
 
@@ -141,10 +143,10 @@ class _BarChart extends StatelessWidget {
     );
 
     final index = value.toInt();
-    if (index < 0 || index > 47) return const SizedBox.shrink();
+    if (index < 0 || index > 63) return const SizedBox.shrink();
 
     final String hour = getHour(index);
-    final IconData icon = getIcon(index);
+    final String icon = IconService.getIcon(weather!, index);
     final String rain = getRain(index);
     final String wind = getWind(index);
 
@@ -154,7 +156,7 @@ class _BarChart extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          BoxedIcon(icon, size: 17),
+          Image.asset(icon, width: 24, height: 24),
           Text(
             hour,
             style: getTextStyleHour(index),
@@ -173,36 +175,42 @@ class _BarChart extends StatelessWidget {
   }
 
   TextStyle getTextStyleWind(TextStyle style, int index) {
-    double probability = weather!.hourlyWeather[index].windSpeed;
-
+    double kmh = weather!.dailyWeather[index].windSpeed * TO_KMH_MULTIPLIER;
     double fontSize = 11;
-    if (probability > 45) {
+
+    if (kmh > 45) {
       return style.copyWith(
         color: AppColors.contentColorRed,
         fontSize: fontSize,
         fontWeight: FontWeight.normal,
       );
-    } else if (probability > 40) {
+    } else if (kmh > 40) {
       return style.copyWith(
         color: AppColors.contentColorRed.withOpacity(0.8),
         fontSize: fontSize,
         fontWeight: FontWeight.normal,
       );
-    } else if (probability > 35) {
+    } else if (kmh > 35) {
       return style.copyWith(
         color: AppColors.contentColorRed.withOpacity(0.7),
         fontSize: fontSize,
         fontWeight: FontWeight.normal,
       );
-    } else if (probability > 30) {
+    } else if (kmh > 30) {
       return style.copyWith(
         color: AppColors.contentColorRed.withOpacity(0.6),
         fontSize: fontSize,
         fontWeight: FontWeight.normal,
       );
-    } else if (probability > 20) {
+    } else if (kmh > 25) {
       return style.copyWith(
         color: AppColors.contentColorRed.withOpacity(0.5),
+        fontSize: fontSize,
+        fontWeight: FontWeight.normal,
+      );
+    } else if (kmh > 20) {
+      return style.copyWith(
+        color: AppColors.contentColorRed.withOpacity(0.4),
         fontSize: fontSize,
         fontWeight: FontWeight.normal,
       );
@@ -216,46 +224,46 @@ class _BarChart extends StatelessWidget {
   }
 
   TextStyle getTextStyleRain(TextStyle style, int index) {
-    double probability = weather!.hourlyWeather[index].precipProbability * 100;
+    double amount = weather!.dailyWeather[index].precipitationAmount;
 
     double fontSize = 11;
-    if (probability > 90) {
+    if (amount >= 0.7) {
       return style.copyWith(
         color: AppColors.contentColorCyan,
         fontSize: fontSize,
         fontWeight: FontWeight.normal,
       );
-    } else if (probability > 80) {
+    } else if (amount >= 0.6) {
       return style.copyWith(
         color: AppColors.contentColorCyan.withOpacity(0.8),
         fontSize: fontSize,
         fontWeight: FontWeight.normal,
       );
-    } else if (probability > 70) {
+    } else if (amount >= 0.5) {
       return style.copyWith(
         color: AppColors.contentColorCyan.withOpacity(0.7),
         fontSize: fontSize,
         fontWeight: FontWeight.normal,
       );
-    } else if (probability > 60) {
+    } else if (amount >= 0.4) {
       return style.copyWith(
         color: AppColors.contentColorCyan.withOpacity(0.6),
         fontSize: fontSize,
         fontWeight: FontWeight.normal,
       );
-    } else if (probability > 50) {
+    } else if (amount >= 0.3) {
       return style.copyWith(
         color: AppColors.contentColorCyan.withOpacity(0.5),
         fontSize: fontSize,
         fontWeight: FontWeight.normal,
       );
-    } else if (probability > 40) {
+    } else if (amount >= 0.2) {
       return style.copyWith(
         color: AppColors.contentColorCyan.withOpacity(0.4),
         fontSize: fontSize,
         fontWeight: FontWeight.normal,
       );
-    } else if (probability > 30) {
+    } else if (amount >= 0.1) {
       return style.copyWith(
         color: AppColors.contentColorCyan.withOpacity(0.3),
         fontSize: fontSize,
@@ -286,36 +294,9 @@ class _BarChart extends StatelessWidget {
     }
   }
 
-  IconData getIcon(int i) {
-    switch (weather!.hourlyWeather[i].icon) {
-      case 'clear-day':
-        return WeatherIcons.day_sunny;
-      case 'clear-night':
-        return WeatherIcons.night_clear;
-      case 'rain':
-        return WeatherIcons.rain;
-      case 'snow':
-        return WeatherIcons.snow;
-      case 'sleet':
-        return WeatherIcons.sleet;
-      case 'wind':
-        return WeatherIcons.strong_wind;
-      case 'fog':
-        return WeatherIcons.fog;
-      case 'cloudy':
-        return WeatherIcons.cloudy;
-      case 'partly-cloudy-day':
-        return WeatherIcons.day_cloudy;
-      case 'partly-cloudy-night':
-        return WeatherIcons.night_alt_cloudy;
-      default:
-        return WeatherIcons.na;
-    }
-  }
-
   String getHour(int i) {
     return DateTime.fromMillisecondsSinceEpoch(
-            weather!.hourlyWeather[i].time * 1000,
+            weather!.dailyWeather[i].time * 1000,
             isUtc: true)
         .add(Duration(hours: 1))
         .hour
@@ -323,11 +304,11 @@ class _BarChart extends StatelessWidget {
   }
 
   String getDayName(int i) {
-    if (i < 0 || i >= weather!.hourlyWeather.length) {
+    if (i < 0 || i >= weather!.dailyWeather.length) {
       return '';
     }
     int weekday = DateTime.fromMillisecondsSinceEpoch(
-      weather!.hourlyWeather[i].time * 1000,
+      weather!.dailyWeather[i].time * 1000,
       isUtc: true,
     ).add(Duration(hours: 1)).weekday;
 
@@ -345,13 +326,13 @@ class _BarChart extends StatelessWidget {
   }
 
   String getWind(int i) {
-    return (weather!.hourlyWeather[i].windSpeed).round().toString();
+    return ((weather!.dailyWeather[i].windSpeed) * TO_KMH_MULTIPLIER)
+        .round()
+        .toString();
   }
 
   String getRain(int i) {
-    return (weather!.hourlyWeather[i].precipProbability * 100)
-        .round()
-        .toString();
+    return (weather!.dailyWeather[i].precipitationAmount).toString();
   }
 
   FlTitlesData get titlesData => FlTitlesData(
@@ -392,12 +373,12 @@ class _BarChart extends StatelessWidget {
       );
 
   List<BarChartGroupData> get barGroups => List.generate(
-        48,
+        63,
         (index) => BarChartGroupData(
           x: index,
           barRods: [
             BarChartRodData(
-              toY: weather!.hourlyWeather[index].temperature,
+              toY: weather!.dailyWeather[index].air_temperature,
               gradient: _barsGradient,
             ),
           ],
@@ -421,7 +402,7 @@ class HourlyChartState extends State<HourlyChart> {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: SizedBox(
-        width: MediaQuery.of(context).size.width * 3.03,
+        width: MediaQuery.of(context).size.width * 4,
         height: 230,
         child: Padding(
           padding: const EdgeInsets.only(left: 13),
