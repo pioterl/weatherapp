@@ -14,6 +14,7 @@ class _BarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var horizontalInterval = (getMaxY() - getMinY()) / 2.5;
     return BarChart(
       BarChartData(
         barTouchData: barTouchData,
@@ -23,7 +24,7 @@ class _BarChart extends StatelessWidget {
         gridData: FlGridData(
             show: true,
             verticalInterval: 0.01588,
-            horizontalInterval: getMaxY() / 2.999),
+            horizontalInterval: horizontalInterval),
         alignment: BarChartAlignment.spaceAround,
         maxY: getMaxY(),
         minY: getMinY(),
