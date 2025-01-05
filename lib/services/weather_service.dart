@@ -15,10 +15,18 @@ class WeatherService {
   Future<Weather> getWeather(List<String> positions) async {
     // final response = await http
     //     .get(Uri.parse('$BASE_URL/$apiKey/51.1642%2C%2023.4716?units=ca'));
+    // final http.Response response = await http.get(
+    //     Uri.parse(
+    //         'https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=-32.3567&lon=22.5830'),
+    //     headers: {'User-Agent': 'WeatherApp/1.0'}); // Beaufort West
     final http.Response response = await http.get(
         Uri.parse(
             'https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=51.759445&lon=19.457216'),
-        headers: {'User-Agent': 'WeatherApp/1.0'});
+        headers: {'User-Agent': 'WeatherApp/1.0'}); // LDZ
+    // final http.Response response = await http.get(
+    //     Uri.parse(
+    //         'https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=69.3535&lon=88.2027'),
+    //     headers: {'User-Agent': 'WeatherApp/1.0'}); // Norylsk
     // final response = await http.get(Uri.parse(
     //     '$BASE_URL/$apiKey/${positions[1]},${positions[2]}?units=ca'));
 
