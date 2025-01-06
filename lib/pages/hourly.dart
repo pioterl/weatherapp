@@ -154,7 +154,7 @@ class _BarChart extends StatelessWidget {
     );
   }
 
-  Widget getTitles(double value, TitleMeta meta) {
+  Widget getBottomTitles(double value, TitleMeta meta) {
     final style = TextStyle(
       color: AppColors.contentColorWhite.withOpacity(0.4),
       fontWeight: FontWeight.bold,
@@ -359,8 +359,8 @@ class _BarChart extends StatelessWidget {
         bottomTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
-            reservedSize: 82,
-            getTitlesWidget: getTitles,
+            reservedSize: 80,
+            getTitlesWidget: getBottomTitles,
           ),
         ),
         leftTitles: const AxisTitles(
@@ -369,7 +369,7 @@ class _BarChart extends StatelessWidget {
         topTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
-            reservedSize: 40,
+            reservedSize: 20,
             getTitlesWidget: getTopTitles,
           ),
         ),
