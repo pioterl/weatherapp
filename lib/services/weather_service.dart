@@ -18,7 +18,7 @@ class WeatherService {
     // final http.Response response = await http.get(
     //     Uri.parse(
     //         'https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=-32.3567&lon=22.5830'),
-    //     headers: {'User-Agent': 'WeatherApp/1.0'}); // Beaufort West
+        headers: {'User-Agent': 'WeatherApp/1.0'}); // Beaufort West
     final http.Response response = await http.get(
         Uri.parse(
             'https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=51.759445&lon=19.457216'),

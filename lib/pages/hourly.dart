@@ -14,7 +14,7 @@ class _BarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var horizontalInterval = (getMaxTemp() - getMinY()) / 2.5;
+    var horizontalInterval = (getMaxY() - getMinY()) / 3.02;
     return BarChart(
       BarChartData(
         barTouchData: barTouchData,
@@ -26,25 +26,27 @@ class _BarChart extends StatelessWidget {
             verticalInterval: 0.01588,
             horizontalInterval: horizontalInterval),
         alignment: BarChartAlignment.spaceAround,
-        maxY: getMaxTemp(),
+        maxY: getMaxY(),
         minY: getMinY(),
       ),
     );
   }
 
-  double getMaxTemp() {
+  double getMaxY() {
     double maxTemp = weather?.dailyWeather
-            .map((e) => e.air_temperature * 1)
+            .map((e) => e.air_temperature)
             .reduce((a, b) => a > b ? a : b) ??
         30;
     return calculateMaxY(maxTemp);
   }
 
   double calculateMaxY(double maxTemp) {
-    if (maxTemp > 25) {
+    if (maxTemp > 35) {
+      return maxTemp * 1.1;
+    } else if (maxTemp > 25) {
       return maxTemp * 1.2;
     } else if (maxTemp <= 0) {
-      return 0;
+      return 0.1;
     }
     return maxTemp * 1.5;
   }
@@ -54,7 +56,9 @@ class _BarChart extends StatelessWidget {
             .map((e) => e.air_temperature)
             .reduce((a, b) => a < b ? a : b) ??
         0;
-    return lowestTemperature < 0 ? calculateMinYBelow0(lowestTemperature) : 0;
+    return lowestTemperature < 0
+        ? calculateMinYBelow0(lowestTemperature)
+        : -0.2;
   }
 
   double calculateMinYBelow0(double lowestTemperature) {
@@ -64,8 +68,10 @@ class _BarChart extends StatelessWidget {
       return lowestTemperature - 3.0;
     } else if (lowestTemperature > -4) {
       return lowestTemperature - 4.0;
-    } else {
+    } else if (lowestTemperature > -15) {
       return lowestTemperature * 1.2;
+    } else {
+      return lowestTemperature * 1.1;
     }
   }
 
