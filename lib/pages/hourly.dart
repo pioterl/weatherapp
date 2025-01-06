@@ -65,11 +65,11 @@ class _BarChart extends StatelessWidget {
 
   double calculateMinYBelow0(double lowestTemperature) {
     if (lowestTemperature > -1.5) {
-      return lowestTemperature - 3.0;
+      return lowestTemperature - 4;
     } else if (lowestTemperature > -3) {
-      return lowestTemperature - 4.0;
+      return lowestTemperature - 5;
     } else if (lowestTemperature > -4) {
-      return lowestTemperature - 5.0;
+      return lowestTemperature - 5.5;
     } else if (lowestTemperature > -15) {
       return lowestTemperature * 1.2;
     } else {
@@ -369,7 +369,7 @@ class _BarChart extends StatelessWidget {
         topTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
-            reservedSize: 20,
+            reservedSize: 40,
             getTitlesWidget: getTopTitles,
           ),
         ),
