@@ -14,7 +14,6 @@ class _BarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var horizontalInterval = (getMaxY() - getMinY()) / 3.02;
     return BarChart(
       BarChartData(
         barTouchData: barTouchData,
@@ -22,9 +21,10 @@ class _BarChart extends StatelessWidget {
         borderData: borderData,
         barGroups: barGroups, // Access weather here
         gridData: FlGridData(
-            show: true,
-            verticalInterval: 0.01588,
-            horizontalInterval: horizontalInterval),
+          show: true,
+          verticalInterval: 0.01588,
+          horizontalInterval: 100,
+        ),
         alignment: BarChartAlignment.spaceAround,
         maxY: getMaxY(),
         minY: getMinY(),
@@ -34,6 +34,7 @@ class _BarChart extends StatelessWidget {
 
   double getMaxY() {
     double maxTemp = weather?.dailyWeather
+            .take(63)
             .map((e) => e.air_temperature)
             .reduce((a, b) => a > b ? a : b) ??
         30;
@@ -44,7 +45,7 @@ class _BarChart extends StatelessWidget {
     if (maxTemp > 35) {
       return maxTemp * 1.1;
     } else if (maxTemp > 25) {
-      return maxTemp * 1.2;
+      return maxTemp * 1.25;
     } else if (maxTemp <= 0) {
       return 0.1;
     }
@@ -53,6 +54,7 @@ class _BarChart extends StatelessWidget {
 
   double getMinY() {
     double lowestTemperature = weather?.dailyWeather
+            .take(63)
             .map((e) => e.air_temperature)
             .reduce((a, b) => a < b ? a : b) ??
         0;
@@ -63,15 +65,15 @@ class _BarChart extends StatelessWidget {
 
   double calculateMinYBelow0(double lowestTemperature) {
     if (lowestTemperature > -1.5) {
-      return lowestTemperature - 2.0;
-    } else if (lowestTemperature > -3) {
       return lowestTemperature - 3.0;
-    } else if (lowestTemperature > -4) {
+    } else if (lowestTemperature > -3) {
       return lowestTemperature - 4.0;
+    } else if (lowestTemperature > -4) {
+      return lowestTemperature - 5.0;
     } else if (lowestTemperature > -15) {
       return lowestTemperature * 1.2;
     } else {
-      return lowestTemperature * 1.1;
+      return lowestTemperature * 1.4;
     }
   }
 
