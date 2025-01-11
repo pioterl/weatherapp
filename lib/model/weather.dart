@@ -3,15 +3,15 @@ import 'hourly_weather.dart';
 
 class Weather {
   final String cityName;
-  final List<DailyWeather> dailyWeather;
+  final List<Timeseries> timeseries;
 
-  Weather({required this.cityName, required this.dailyWeather});
+  Weather({required this.cityName, required this.timeseries});
 
   factory Weather.fromJson(Map<String, dynamic> json, String city) {
     return Weather(
         cityName: city,
-        dailyWeather: (json['properties']['timeseries'] as List)
-            .map((data) => DailyWeather.fromJson(data))
+        timeseries: (json['properties']['timeseries'] as List)
+            .map((data) => Timeseries.fromJson(data))
             .toList());
   }
 }

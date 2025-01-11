@@ -23,6 +23,7 @@ class _WeatherPageState extends State<WeatherPage> {
   late final WeatherService _weatherService;
   Weather? _weather;
   bool _showWeatherInfo = false;
+  static const double FONT_SIZE = 13.0;
 
   @override
   void initState() {
@@ -49,11 +50,11 @@ class _WeatherPageState extends State<WeatherPage> {
 
   @override
   Widget build(BuildContext context) {
-    const int MAX_LENGTH = 12;
+    const int MAX_LENGTH = 13;
 
     return SafeArea(
       child: Scaffold(
-        body: _weather?.dailyWeather == null
+        body: _weather?.timeseries == null
             ? Center(
                 child: CircularProgressIndicator(
                   color: Colors.grey,
@@ -87,16 +88,17 @@ class _WeatherPageState extends State<WeatherPage> {
                                   ),
                                 ),
                                 Text(
-                                    "${_weather!.dailyWeather.elementAt(0).air_temperature.round()}°C, "
-                                    "${_weather!.dailyWeather.elementAt(0).icon_1h}"),
+                                    "${_weather!.timeseries.elementAt(0).air_temperature.round()}°C, "
+                                    "${_weather!.timeseries.elementAt(0).icon_1h}"),
                               ],
                             ),
                           ),
                           Spacer(),
                           Padding(
-                            padding: const EdgeInsets.only(right: 5.0),
+                            padding:
+                                const EdgeInsets.only(top: 5.0, right: 5.0),
                             child: Image.asset(
-                              IconService.getIcon(_weather!, 0),
+                              IconService.getIconHourly(_weather!, 0),
                               width: 100,
                               height: 100,
                             ),
@@ -126,7 +128,7 @@ class _WeatherPageState extends State<WeatherPage> {
                                   style: TextStyle(
                                     color: Colors.black87,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 13.0,
+                                    fontSize: FONT_SIZE,
                                   ),
                                 ),
                               ),
@@ -200,13 +202,13 @@ class _WeatherPageState extends State<WeatherPage> {
                               style: TextStyle(
                                 color: Colors.black87, // Text color
                                 fontWeight: FontWeight.bold, // Bold text
-                                fontSize: 13.0, // Adjust font size
+                                fontSize: FONT_SIZE, // Adjust font size
                               ),
                             ),
                           ),
                         ),
                       ),
-                      // DailyChart(weather: _weather),
+                      DailyChart(weather: _weather),
                       Align(
                         alignment: Alignment
                             .centerLeft, // Align the container to the left
@@ -231,7 +233,7 @@ class _WeatherPageState extends State<WeatherPage> {
                               style: TextStyle(
                                 color: Colors.black87, // Text color
                                 fontWeight: FontWeight.bold, // Bold text
-                                fontSize: 13.0, // Adjust font size
+                                fontSize: FONT_SIZE, // Adjust font size
                               ),
                             ),
                           ),
@@ -262,7 +264,7 @@ class _WeatherPageState extends State<WeatherPage> {
                               style: TextStyle(
                                 color: Colors.black87, // Text color
                                 fontWeight: FontWeight.bold, // Bold text
-                                fontSize: 13.0, // Adjust font size
+                                fontSize: FONT_SIZE, // Adjust font size
                               ),
                             ),
                           ),
@@ -383,32 +385,5 @@ class _WeatherPageState extends State<WeatherPage> {
         ),
       ],
     );
-  }
-
-  IconData getIcon(String icon) {
-    switch (icon) {
-      case 'clear-day':
-        return WeatherIcons.day_sunny;
-      case 'clear-night':
-        return WeatherIcons.night_clear;
-      case 'rain':
-        return WeatherIcons.rain;
-      case 'snow':
-        return WeatherIcons.snow;
-      case 'sleet':
-        return WeatherIcons.sleet;
-      case 'wind':
-        return WeatherIcons.strong_wind;
-      case 'fog':
-        return WeatherIcons.fog;
-      case 'cloudy':
-        return WeatherIcons.cloudy;
-      case 'partly-cloudy-day':
-        return WeatherIcons.day_cloudy;
-      case 'partly-cloudy-night':
-        return WeatherIcons.night_alt_cloudy;
-      default:
-        return WeatherIcons.na;
-    }
   }
 }

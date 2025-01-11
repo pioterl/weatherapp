@@ -1,14 +1,13 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
+import '../util/commons.dart';
 import '../util/icon_service.dart';
 import '../model/weather.dart';
 import 'app_resources.dart';
 
 class _BarChart extends StatelessWidget {
   final Weather? weather;
-
-  static const double TO_KMH_MULTIPLIER = 3.6;
 
   const _BarChart({required this.weather});
 
@@ -33,7 +32,7 @@ class _BarChart extends StatelessWidget {
   }
 
   double getMaxY() {
-    double maxTemp = weather?.dailyWeather
+    double maxTemp = weather?.timeseries
             .take(63)
             .map((e) => e.air_temperature)
             .reduce((a, b) => a > b ? a : b) ??
@@ -46,6 +45,8 @@ class _BarChart extends StatelessWidget {
       return maxTemp * 1.1;
     } else if (maxTemp > 25) {
       return maxTemp * 1.25;
+    } else if (maxTemp > 0) {
+      return maxTemp + 2.0;
     } else if (maxTemp <= 0) {
       return 0.1;
     }
@@ -53,7 +54,7 @@ class _BarChart extends StatelessWidget {
   }
 
   double getMinY() {
-    double lowestTemperature = weather?.dailyWeather
+    double lowestTemperature = weather?.timeseries
             .take(63)
             .map((e) => e.air_temperature)
             .reduce((a, b) => a < b ? a : b) ??
@@ -62,27 +63,6 @@ class _BarChart extends StatelessWidget {
         ? calculateMinYBelow0(lowestTemperature)
         : -0.2;
   }
-
-  double calculateMinYBelow0(double lowestTemperature) {
-    if (lowestTemperature > -1.5) {
-      return lowestTemperature - 4;
-    } else if (lowestTemperature > -3) {
-      return lowestTemperature - 5;
-    } else if (lowestTemperature > -4) {
-      return lowestTemperature - 5.5;
-    } else if (lowestTemperature > -15) {
-      return lowestTemperature * 1.2;
-    } else {
-      return lowestTemperature * 1.4;
-    }
-  }
-
-  // double getLowest() {
-  //   return weather?.hourlyWeather
-  //           .map((e) => e.temperature - 0.6)
-  //           .reduce((a, b) => a < b ? a : b) ??
-  //       -10;
-  // }
 
   BarTouchData get barTouchData => BarTouchData(
         enabled: false,
@@ -139,14 +119,14 @@ class _BarChart extends StatelessWidget {
               padding: const EdgeInsets.only(left: 10.0),
               child: Text(dayName,
                   style: style.copyWith(
-                    fontSize: 11,
+                    fontSize: 12,
                     fontWeight: FontWeight.normal,
                   )),
             )
           else
             Text(dayName,
                 style: style.copyWith(
-                  fontSize: 11,
+                  fontSize: 12,
                   fontWeight: FontWeight.normal,
                 )),
         ],
@@ -165,7 +145,7 @@ class _BarChart extends StatelessWidget {
     if (index < 0 || index > 63) return const SizedBox.shrink();
 
     final String hour = getHour(index);
-    final String icon = IconService.getIcon(weather!, index);
+    final String icon = IconService.getIconHourly(weather!, index);
     final String rain = getRain(index);
     final String wind = getWind(index);
 
@@ -194,8 +174,8 @@ class _BarChart extends StatelessWidget {
   }
 
   TextStyle getTextStyleWind(TextStyle style, int index) {
-    double kmh = weather!.dailyWeather[index].windSpeed * TO_KMH_MULTIPLIER;
-    double fontSize = 11;
+    double kmh = weather!.timeseries[index].windSpeed;
+    double fontSize = 12;
 
     if (kmh > 45) {
       return style.copyWith(
@@ -243,9 +223,9 @@ class _BarChart extends StatelessWidget {
   }
 
   TextStyle getTextStyleRain(TextStyle style, int index) {
-    double amount = weather!.dailyWeather[index].precipitationAmount;
+    double amount = weather!.timeseries[index].precipitationAmount;
 
-    double fontSize = 11;
+    double fontSize = 12;
     if (amount >= 0.7) {
       return style.copyWith(
         color: AppColors.contentColorCyan,
@@ -313,24 +293,15 @@ class _BarChart extends StatelessWidget {
     }
   }
 
-  String getHour(int i) {
-    return DateTime.fromMillisecondsSinceEpoch(
-            weather!.dailyWeather[i].time * 1000,
-            isUtc: true)
-        .add(Duration(hours: 1))
-        .hour
-        .toString();
+  String getHour(int index) {
+    return weather!.timeseries[index].time.hour.toString();
   }
 
-  String getDayName(int i) {
-    if (i < 0 || i >= weather!.dailyWeather.length) {
+  String getDayName(int index) {
+    if (index < 0 || index >= weather!.timeseries.length) {
       return '';
     }
-    int weekday = DateTime.fromMillisecondsSinceEpoch(
-      weather!.dailyWeather[i].time * 1000,
-      isUtc: true,
-    ).add(Duration(hours: 1)).weekday;
-
+    int weekday = weather!.timeseries[index].time.weekday;
     String weekdayName = [
       'Monday',
       'Tuesday',
@@ -340,18 +311,15 @@ class _BarChart extends StatelessWidget {
       'Saturday',
       'Sunday'
     ][weekday - 1];
-
     return weekdayName;
   }
 
-  String getWind(int i) {
-    return ((weather!.dailyWeather[i].windSpeed) * TO_KMH_MULTIPLIER)
-        .round()
-        .toString();
+  String getWind(int index) {
+    return ((weather!.timeseries[index].windSpeed)).round().toString();
   }
 
-  String getRain(int i) {
-    return (weather!.dailyWeather[i].precipitationAmount).toString();
+  String getRain(int index) {
+    return (weather!.timeseries[index].precipitationAmount).toString();
   }
 
   FlTitlesData get titlesData => FlTitlesData(
@@ -359,7 +327,7 @@ class _BarChart extends StatelessWidget {
         bottomTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
-            reservedSize: 80,
+            reservedSize: 82,
             getTitlesWidget: getBottomTitles,
           ),
         ),
@@ -369,7 +337,7 @@ class _BarChart extends StatelessWidget {
         topTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
-            reservedSize: 20,
+            reservedSize: 21,
             getTitlesWidget: getTopTitles,
           ),
         ),
@@ -397,7 +365,7 @@ class _BarChart extends StatelessWidget {
           x: index,
           barRods: [
             BarChartRodData(
-              toY: weather!.dailyWeather[index].air_temperature,
+              toY: weather!.timeseries[index].air_temperature,
               gradient: _barsGradient,
             ),
           ],
@@ -422,7 +390,7 @@ class HourlyChartState extends State<HourlyChart> {
       scrollDirection: Axis.horizontal,
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 4,
-        height: 230,
+        height: 240,
         child: Padding(
           padding: const EdgeInsets.only(left: 13),
           child: AspectRatio(
