@@ -267,7 +267,7 @@ class _WindSpeedState extends State<WindSpeed> {
                   getTooltipItems: (List<LineBarSpot> lineBarsSpot) {
                     return lineBarsSpot.map((lineBarSpot) {
                       return LineTooltipItem(
-                        lineBarSpot.y.round().toString(),
+                        '\u00A0${lineBarSpot.y.round()}\u00A0',
                         const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,

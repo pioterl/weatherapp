@@ -7,7 +7,8 @@ import 'package:http/http.dart' as http;
 import '../model/weather.dart';
 
 class WeatherService {
-  static const BASE_URL = 'https://api.pirateweather.net/forecast';
+  static const BASE_URL =
+      'https://api.met.no/weatherapi/locationforecast/2.0/compact';
   final String apiKey;
 
   WeatherService({required this.apiKey});
@@ -18,17 +19,29 @@ class WeatherService {
     // final http.Response response = await http.get(
     //     Uri.parse(
     //         'https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=-32.3567&lon=22.5830'),
-    //     headers: {'User-Agent': 'WeatherApp/1.0'}); // Beaufort West
-    final http.Response response = await http.get(
-        Uri.parse(
-            'https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=51.759445&lon=19.457216'),
-        headers: {'User-Agent': 'WeatherApp/1.0'}); // LDZ
+    //     headers: {
+    //       'User-Agent': 'WeatherApp/1.0 https://github.com/pioterl/weatherapp'
+    //     }); // Beaufort West
+
     // final http.Response response = await http.get(
     //     Uri.parse(
     //         'https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=69.3535&lon=88.2027'),
-    //     headers: {'User-Agent': 'WeatherApp/1.0'}); // Norylsk
-    // final response = await http.get(Uri.parse(
-    //     '$BASE_URL/$apiKey/${positions[1]},${positions[2]}?units=ca'));
+    //     headers: {
+    //       'User-Agent': 'WeatherApp/1.0 https://github.com/pioterl/weatherapp'
+    //     }); // Norylsk
+
+    // final http.Response response = await http.get(
+    //     Uri.parse(
+    //         'https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=51.759445&lon=19.457216'),
+    //     headers: {
+    //       'User-Agent': 'WeatherApp/1.0 https://github.com/pioterl/weatherapp'
+    //     }); // LDZ
+
+    final http.Response response = await http.get(
+        Uri.parse('$BASE_URL?lat=${positions[1]}&lon=${positions[2]}'),
+        headers: {
+          'User-Agent': 'WeatherApp/1.0 https://github.com/pioterl/weatherapp'
+        });
 
     if (response.statusCode == 200) {
       Weather weather =
