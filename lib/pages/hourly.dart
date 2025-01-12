@@ -34,7 +34,7 @@ class _BarChart extends StatelessWidget {
   double getMaxY() {
     double maxTemp = weather?.timeseries
             .take(63)
-            .map((e) => e.air_temperature)
+            .map((e) => e.airTemperature)
             .reduce((a, b) => a > b ? a : b) ??
         30;
     return calculateMaxY(maxTemp);
@@ -56,7 +56,7 @@ class _BarChart extends StatelessWidget {
   double getMinY() {
     double lowestTemperature = weather?.timeseries
             .take(63)
-            .map((e) => e.air_temperature)
+            .map((e) => e.airTemperature)
             .reduce((a, b) => a < b ? a : b) ??
         0;
     return lowestTemperature < 0
@@ -223,7 +223,7 @@ class _BarChart extends StatelessWidget {
   }
 
   TextStyle getTextStyleRain(TextStyle style, int index) {
-    double amount = weather!.timeseries[index].precipitationAmount;
+    double amount = weather!.timeseries[index].precipitationAmount1h;
 
     double fontSize = 12;
     if (amount >= 0.7) {
@@ -319,7 +319,7 @@ class _BarChart extends StatelessWidget {
   }
 
   String getRain(int index) {
-    return (weather!.timeseries[index].precipitationAmount).toString();
+    return (weather!.timeseries[index].precipitationAmount1h).toString();
   }
 
   FlTitlesData get titlesData => FlTitlesData(
@@ -365,7 +365,7 @@ class _BarChart extends StatelessWidget {
           x: index,
           barRods: [
             BarChartRodData(
-              toY: weather!.timeseries[index].air_temperature,
+              toY: weather!.timeseries[index].airTemperature,
               gradient: _barsGradient,
             ),
           ],

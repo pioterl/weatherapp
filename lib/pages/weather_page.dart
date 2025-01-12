@@ -88,7 +88,7 @@ class _WeatherPageState extends State<WeatherPage> {
                                   ),
                                 ),
                                 Text(
-                                    "${_weather!.timeseries.elementAt(0).air_temperature.round()}°C, "
+                                    "${_weather!.timeseries.elementAt(0).airTemperature.round()}°C, "
                                     "${_weather!.timeseries.elementAt(0).icon_1h}"),
                               ],
                             ),
@@ -229,7 +229,7 @@ class _WeatherPageState extends State<WeatherPage> {
                                 horizontal: 8.0,
                                 vertical: 3.0), // Padding inside the container
                             child: Text(
-                              "PRECIPITATION - %",
+                              "PRECIPITATION (mm)",
                               style: TextStyle(
                                 color: Colors.black87, // Text color
                                 fontWeight: FontWeight.bold, // Bold text
@@ -239,7 +239,7 @@ class _WeatherPageState extends State<WeatherPage> {
                           ),
                         ),
                       ),
-                      // RainSnow(weather: _weather),
+                      RainSnow(weather: _weather),
                       Align(
                         alignment: Alignment
                             .centerLeft, // Align the container to the left
@@ -260,7 +260,7 @@ class _WeatherPageState extends State<WeatherPage> {
                                 horizontal: 8.0,
                                 vertical: 3.0), // Padding inside the container
                             child: Text(
-                              "WIND SPEED - KMH",
+                              "WIND SPEED (km/h)",
                               style: TextStyle(
                                 color: Colors.black87, // Text color
                                 fontWeight: FontWeight.bold, // Bold text
@@ -270,7 +270,7 @@ class _WeatherPageState extends State<WeatherPage> {
                           ),
                         ),
                       ),
-                      // WindSpeed(weather: _weather),
+                      WindSpeed(weather: _weather),
                     ],
                   ).animate(effects: [FadeEffect()]),
                 ),

@@ -32,7 +32,7 @@ class _BarChart extends StatelessWidget {
   double getMaxY() {
     double maxTemp = weather?.timeseries
             .take(82)
-            .map((e) => e.air_temperature)
+            .map((e) => e.airTemperature)
             .reduce((a, b) => a > b ? a : b) ??
         30;
     return calculateMaxY(maxTemp);
@@ -156,7 +156,13 @@ class _BarChart extends StatelessWidget {
           Text(dayNum.toString(), style: style),
           Text(
             dayName,
-            style: style.copyWith(fontSize: 12, fontWeight: FontWeight.normal),
+            style: style.copyWith(
+              fontSize: 12,
+              fontWeight: FontWeight.normal,
+              color: (dayName == 'Sat' || dayName == 'Sun')
+                  ? Colors.orange.shade300.withOpacity(0.8)
+                  : style.color,
+            ),
           ),
         ],
       ),
@@ -333,7 +339,7 @@ class _BarChart extends StatelessWidget {
             e.time.year == calculatedDay.year &&
             e.time.month == calculatedDay.month &&
             e.time.day == calculatedDay.day)
-        .map((e) => e.air_temperature)
+        .map((e) => e.airTemperature)
         .toList();
 
     if (dayTemperatures.isEmpty) {
@@ -352,7 +358,7 @@ class _BarChart extends StatelessWidget {
             e.time.year == nextDay.year &&
             e.time.month == nextDay.month &&
             e.time.day == nextDay.day)
-        .map((e) => e.air_temperature)
+        .map((e) => e.airTemperature)
         .toList();
 
     if (nextDayTemperatures.isEmpty) {
