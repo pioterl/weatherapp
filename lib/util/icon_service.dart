@@ -2,18 +2,18 @@ import 'package:weatherapp/model/weather.dart';
 
 class IconService {
   static String getIconHourly(Weather weather, int index) {
-    final Map<String, String> iconMap = map();
+    final Map<String, String> iconMap = mapIcon();
 
     return iconMap[weather.timeseries[index].icon_1h] ??
         "assets/weather_symbols/na.png";
   }
 
   static String getIconDaily(String icon) {
-    final Map<String, String> iconMap = map();
+    final Map<String, String> iconMap = mapIcon();
     return iconMap[icon] ?? "assets/weather_symbols/na.png";
   }
 
-  static Map<String, String> map() {
+  static Map<String, String> mapIcon() {
     return {
       "clearsky_day": "assets/weather_symbols/01d.png",
       "clearsky_night": "assets/weather_symbols/01n.png",

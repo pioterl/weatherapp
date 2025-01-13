@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:weather_icons/weather_icons.dart';
 import 'package:weatherapp/model/weather.dart';
 import 'package:weatherapp/pages/hourly.dart';
 
 import '../services/weather_service.dart';
+import '../util/descriptions.dart';
 import '../util/icon_service.dart';
 import 'app_resources.dart';
 import 'daily.dart';
@@ -89,7 +89,7 @@ class _WeatherPageState extends State<WeatherPage> {
                                 ),
                                 Text(
                                     "${_weather!.timeseries.elementAt(0).airTemperature.round()}°C, "
-                                    "${_weather!.timeseries.elementAt(0).icon_1h}"),
+                                    "${mapDescription()[_weather!.timeseries.elementAt(0).icon_1h]}"),
                               ],
                             ),
                           ),
@@ -143,10 +143,7 @@ class _WeatherPageState extends State<WeatherPage> {
                             alignment: Alignment.centerRight,
                             child: Padding(
                               padding: EdgeInsets.only(
-                                top: 4.0,
-                                left: 0.0,
-                                bottom: 10,
-                              ),
+                                  top: 4.0, left: 0.0, bottom: 10, right: 5),
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: Colors.transparent,
@@ -348,7 +345,7 @@ class _WeatherPageState extends State<WeatherPage> {
               ),
               padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 3.0),
               child: Text(
-                "PRECIPITATION - %",
+                "PRECIP. (mm)",
                 style: TextStyle(
                   color: AppColors.contentColorCyan,
                   fontSize: 11,
@@ -373,7 +370,7 @@ class _WeatherPageState extends State<WeatherPage> {
               ),
               padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 3.0),
               child: Text(
-                "WIND - KMH",
+                "WIND (km/h)",
                 style: TextStyle(
                   color: AppColors.contentColorRed,
                   fontSize: 11,

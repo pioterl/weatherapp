@@ -30,18 +30,18 @@ class WeatherService {
     //       'User-Agent': 'WeatherApp/1.0 https://github.com/pioterl/weatherapp'
     //     }); // Norylsk
 
-    // final http.Response response = await http.get(
-    //     Uri.parse(
-    //         'https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=51.759445&lon=19.457216'),
-    //     headers: {
-    //       'User-Agent': 'WeatherApp/1.0 https://github.com/pioterl/weatherapp'
-    //     }); // LDZ
-
     final http.Response response = await http.get(
-        Uri.parse('$BASE_URL?lat=${positions[1]}&lon=${positions[2]}'),
+        Uri.parse(
+            'https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=51.759445&lon=19.457216'),
         headers: {
           'User-Agent': 'WeatherApp/1.0 https://github.com/pioterl/weatherapp'
-        });
+        }); // LDZ
+
+    // final http.Response response = await http.get(
+    //     Uri.parse('$BASE_URL?lat=${positions[1]}&lon=${positions[2]}'),
+    //     headers: {
+    //       'User-Agent': 'WeatherApp/1.0 https://github.com/pioterl/weatherapp'
+    //     });
 
     if (response.statusCode == 200) {
       Weather weather =
