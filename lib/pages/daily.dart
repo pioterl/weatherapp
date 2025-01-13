@@ -305,7 +305,7 @@ class _BarChart extends StatelessWidget {
             e.time.year == calculatedDay.year &&
             e.time.month == calculatedDay.month &&
             e.time.day == calculatedDay.day &&
-            e.time.hour == 1)
+            e.time.hour == 7)
         .map((e) => e.icon_12h)
         .toList();
 
