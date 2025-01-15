@@ -50,7 +50,8 @@ class _WeatherPageState extends State<WeatherPage> {
 
   @override
   Widget build(BuildContext context) {
-    const int MAX_LENGTH = 13;
+    const int maxLength = 13;
+    Color titleColor = AppColors.contentColorWhite.withOpacity(0.8);
 
     return SafeArea(
       child: Scaffold(
@@ -78,12 +79,12 @@ class _WeatherPageState extends State<WeatherPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  _weather!.cityName.length > MAX_LENGTH
-                                      ? "${_weather!.cityName.substring(0, MAX_LENGTH).toUpperCase()}..."
+                                  _weather!.cityName.length > maxLength
+                                      ? "${_weather!.cityName.substring(0, maxLength).toUpperCase()}..."
                                       : _weather!.cityName.toUpperCase(),
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w900,
                                     fontSize: 30.0,
                                   ),
                                 ),
@@ -118,7 +119,7 @@ class _WeatherPageState extends State<WeatherPage> {
                               ),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: AppColors.contentColorCyan,
+                                  color: titleColor,
                                   borderRadius: BorderRadius.circular(2.0),
                                 ),
                                 padding: EdgeInsets.symmetric(
@@ -186,8 +187,7 @@ class _WeatherPageState extends State<WeatherPage> {
                           ), // Add 20 pixels of padding from the left
                           child: Container(
                             decoration: BoxDecoration(
-                              color: AppColors
-                                  .contentColorCyan, // Background color
+                              color: titleColor, // Background color
                               borderRadius:
                                   BorderRadius.circular(2.0), // Rounded corners
                             ),
@@ -217,8 +217,7 @@ class _WeatherPageState extends State<WeatherPage> {
                           ), // Add 20 pixels of padding from the left
                           child: Container(
                             decoration: BoxDecoration(
-                              color: AppColors
-                                  .contentColorCyan, // Background color
+                              color: titleColor, // Background color
                               borderRadius:
                                   BorderRadius.circular(2.0), // Rounded corners
                             ),
@@ -248,8 +247,7 @@ class _WeatherPageState extends State<WeatherPage> {
                           ), // Add 20 pixels of padding from the left
                           child: Container(
                             decoration: BoxDecoration(
-                              color: AppColors
-                                  .contentColorCyan, // Background color
+                              color: titleColor, // Background color
                               borderRadius:
                                   BorderRadius.circular(2.0), // Rounded corners
                             ),

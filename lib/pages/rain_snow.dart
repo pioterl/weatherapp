@@ -323,7 +323,7 @@ class _RainSnowState extends State<RainSnow> {
 
   double getMaxY() {
     Map<int, double> precipAmounts = {};
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i <= 7; i++) {
       precipAmounts[i] = getMaxPrecipAmountForDay(i);
     }
 

@@ -1,6 +1,6 @@
 double calculateMinYBelow0(double lowestTemperature) {
-  if (lowestTemperature > -1.5) {
-    return lowestTemperature - 3;
+  if (lowestTemperature >= -1.5) {
+    return lowestTemperature - 2.5;
   } else if (lowestTemperature > -3) {
     return lowestTemperature - 3.5;
   } else if (lowestTemperature > -4) {
